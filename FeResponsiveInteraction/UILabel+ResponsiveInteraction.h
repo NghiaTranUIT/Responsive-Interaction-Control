@@ -15,4 +15,6 @@
 
 // Disable
 -(void) disableResponsiveInteraction;
+
+-(void) setGlobleResponsiveInteractionWithView:(UIView *) view;
 @end

@@ -63,7 +63,21 @@
         // Add subview
         [_arrLabels addObject:label];
         [self.view addSubview:label];
+        
+        /*
+        NSArray *arrGesture = self.view.gestureRecognizers;
+        if (arrGesture == nil)
+        {
+            self.view.gestureRecognizers = label.gestureRecognizers;
+        }
+        else
+        {
+            NSArray *newGesture = [arrGesture arrayByAddingObjectsFromArray:label.gestureRecognizers];
+            self.view.gestureRecognizers = newGesture;
+        }
+         */
     }
+    NSLog(@"gesture = %@",self.view.gestureRecognizers);
 }
 
 #pragma mark - Action

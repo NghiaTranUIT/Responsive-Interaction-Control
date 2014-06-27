@@ -54,11 +54,11 @@ static char key_animation_state;
 {
     ////////////////////////////////////////////
     ////////////////////////////////////////////////
+    // Define
+    CGFloat duration = 0.3f;
+    
     if (YES)
     {
-        // Define
-        CGFloat duration = 0.3f;
-        
         /////////////
         // Transform
         CATransform3D t = CATransform3DIdentity;
@@ -70,7 +70,7 @@ static char key_animation_state;
         liftAnimation.duration = duration;
         liftAnimation.fillMode = kCAFillModeForwards;
         liftAnimation.removedOnCompletion = NO;
-        
+        liftAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
         
         // Shadow Offset
         CABasicAnimation *shadowOffsetAnimation = [CABasicAnimation animationWithKeyPath:@"shadowOffset"];
@@ -78,7 +78,7 @@ static char key_animation_state;
         shadowOffsetAnimation.duration = duration;
         shadowOffsetAnimation.fillMode = kCAFillModeForwards;
         shadowOffsetAnimation.removedOnCompletion = NO;
-        
+        shadowOffsetAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
         
         // Shadow Radius
         CABasicAnimation *shadowRaidusAnimation = [CABasicAnimation animationWithKeyPath:@"shadowRadius"];
@@ -86,6 +86,7 @@ static char key_animation_state;
         shadowRaidusAnimation.duration = duration;
         shadowRaidusAnimation.fillMode = kCAFillModeForwards;
         shadowRaidusAnimation.removedOnCompletion = NO;
+        shadowRaidusAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
         
         CAAnimationGroup *group = [CAAnimationGroup animation];
         group = [CAAnimationGroup animation];
@@ -93,6 +94,7 @@ static char key_animation_state;
         group.animations = @[liftAnimation, shadowOffsetAnimation, shadowRaidusAnimation];
         group.fillMode = kCAFillModeForwards;
         group.removedOnCompletion = NO;
+        group.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
         
         // Set
         [self set_groupAnimation_lift_up:group];
@@ -101,9 +103,6 @@ static char key_animation_state;
     ////////////////////////////////////////
     if (YES)
     {
-        // Define
-        CGFloat duration = 0.3f;
-        
         /////////////
         // Transform
         CATransform3D t = CATransform3DIdentity;
@@ -114,7 +113,7 @@ static char key_animation_state;
         liftAnimation.duration = duration;
         liftAnimation.fillMode = kCAFillModeForwards;
         liftAnimation.removedOnCompletion = NO;
-        
+        liftAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
         
         // Shadow Offset
         CABasicAnimation *shadowOffsetAnimation = [CABasicAnimation animationWithKeyPath:@"shadowOffset"];
@@ -122,7 +121,7 @@ static char key_animation_state;
         shadowOffsetAnimation.duration = duration;
         shadowOffsetAnimation.fillMode = kCAFillModeForwards;
         shadowOffsetAnimation.removedOnCompletion = NO;
-        
+        shadowOffsetAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
         
         // Shadow Radius
         CABasicAnimation *shadowRaidusAnimation = [CABasicAnimation animationWithKeyPath:@"shadowRadius"];
@@ -130,6 +129,7 @@ static char key_animation_state;
         shadowRaidusAnimation.duration = duration;
         shadowRaidusAnimation.fillMode = kCAFillModeForwards;
         shadowRaidusAnimation.removedOnCompletion = NO;
+        shadowRaidusAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
         
         CAAnimationGroup *group = [CAAnimationGroup animation];
         group = [CAAnimationGroup animation];
@@ -137,6 +137,7 @@ static char key_animation_state;
         group.animations = @[liftAnimation, shadowOffsetAnimation, shadowRaidusAnimation];
         group.fillMode = kCAFillModeForwards;
         group.removedOnCompletion = NO;
+        group.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
         
         // Set
         [self set_groupAnimation_lift_down:group];
@@ -206,43 +207,7 @@ static char key_animation_state;
         {
             if ([self get_isAnimate_state] == kFe_State_Stop_InGround)
             {
-                CAAnimationGroup *group = [self get_groupAnimation_lift_up];
-                
-                // Delegate object
-                FeBasicAnimationBlock *blockObj = [[FeBasicAnimationBlock alloc] init];
-                group.delegate = blockObj;
-                blockObj.blockDidStop = ^
-                {
-                    // Save state
-                    [CATransaction begin];
-                    [CATransaction disableActions];
-                    
-                    CATransform3D t = CATransform3DIdentity;
-                    t.m34 = - 1.0f / 800.0f;
-                    t = CATransform3DTranslate(t, 0, 0, 13);
-                    
-                    self.layer.transform = t;
-                    self.layer.shadowOffset = CGSizeMake(0, 7);
-                    self.layer.shadowRadius = 5;
-                    // REMOVE
-                    [self.layer removeAllAnimations];
-                    
-                    [CATransaction commit];
-                    
-                    
-                    
-                    // State
-                    [self set_animation_state:kFe_State_Stop_InAir];
-                };
-                
-                // Add animation
-                [self.layer addAnimation:group forKey:@"leftUP"];
-                
-                // is Animating
-                [self set_animation_state:kFe_State_Lifting_Up];
-                
-                break;
-
+                [self liftUpAnimation];
             }
             
             break;
@@ -253,7 +218,10 @@ static char key_animation_state;
             
             if (CGRectContainsPoint(self.frame, locationTouch))
             {
-                
+                if ([self get_isAnimate_state] == kFe_State_Stop_InGround)
+                {
+                    [self liftUpAnimation];
+                }
             }
             else // Out-side
             {
@@ -265,45 +233,18 @@ static char key_animation_state;
                 }
                 else if ([self get_isAnimate_state] == kFe_State_Stop_InAir)
                 {
-                    // Reverse animate at end animation
-                    CAAnimationGroup *group = [self get_groupAnimation_lift_down];
-                    
-                    
-                    // Delegate object
-                    FeBasicAnimationBlock *blockObj = [[FeBasicAnimationBlock alloc] init];
-                    group.delegate = blockObj;
-                    blockObj.blockDidStop = ^
-                    {
-                        // Save state
-                        [CATransaction begin];
-                        [CATransaction disableActions];
-                        
-                        CATransform3D t = CATransform3DIdentity;
-                        
-                        self.layer.transform = t;
-                        self.layer.shadowOffset = CGSizeMake(0, 2);
-                        self.layer.shadowRadius = 3;
-                        
-                        // REMOVE
-                        [self.layer removeAllAnimations];
-                        
-                        [CATransaction commit];
-                        
-                        
-                        
-                        // State
-                        [self set_animation_state:kFe_State_Stop_InGround];
-                    };
-                    
-                    [self.layer addAnimation:group forKey:@"liftDown"];
-                    [self set_animation_state:kFe_State_Lifting_Down];
+                    [self liftDownAnimation];
                 }
             }
             break;
         }
+        case UIGestureRecognizerStateCancelled:
         case UIGestureRecognizerStateEnded:
         {
-            
+            if ([self get_isAnimate_state] == kFe_State_Stop_InAir)
+            {
+                [self liftDownAnimation];
+            }
             break;
         }
         default:
@@ -312,8 +253,76 @@ static char key_animation_state;
     
 }
 
-
-
+-(void) liftUpAnimation
+{
+    CAAnimationGroup *group = [self get_groupAnimation_lift_up];
+    
+    // Delegate object
+    FeBasicAnimationBlock *blockObj = [[FeBasicAnimationBlock alloc] init];
+    group.delegate = blockObj;
+    blockObj.blockDidStop = ^
+    {
+        // Save state
+        [CATransaction begin];
+        [CATransaction disableActions];
+        
+        CATransform3D t = CATransform3DIdentity;
+        t.m34 = - 1.0f / 800.0f;
+        t = CATransform3DTranslate(t, 0, 0, 13);
+        
+        self.layer.transform = t;
+        self.layer.shadowOffset = CGSizeMake(0, 7);
+        self.layer.shadowRadius = 5;
+        // REMOVE
+        [self.layer removeAllAnimations];
+        
+        [CATransaction commit];
+        
+        // State
+        [self set_animation_state:kFe_State_Stop_InAir];
+    };
+    
+    // Add animation
+    [self.layer addAnimation:group forKey:@"leftUP"];
+    
+    // is Animating
+    [self set_animation_state:kFe_State_Lifting_Up];
+}
+-(void) liftDownAnimation
+{
+    // Reverse animate at end animation
+    CAAnimationGroup *group = [self get_groupAnimation_lift_down];
+    
+    
+    // Delegate object
+    FeBasicAnimationBlock *blockObj = [[FeBasicAnimationBlock alloc] init];
+    group.delegate = blockObj;
+    blockObj.blockDidStop = ^
+    {
+        // Save state
+        [CATransaction begin];
+        [CATransaction disableActions];
+        
+        CATransform3D t = CATransform3DIdentity;
+        
+        self.layer.transform = t;
+        self.layer.shadowOffset = CGSizeMake(0, 2);
+        self.layer.shadowRadius = 3;
+        
+        // REMOVE
+        [self.layer removeAllAnimations];
+        
+        [CATransaction commit];
+        
+        
+        
+        // State
+        [self set_animation_state:kFe_State_Stop_InGround];
+    };
+    
+    [self.layer addAnimation:group forKey:@"liftDown"];
+    [self set_animation_state:kFe_State_Lifting_Down];
+}
 
 #pragma mark - Action
 -(void) activeResponsiveInteraction
@@ -324,6 +333,19 @@ static char key_animation_state;
 {
     
 }
-
+-(void) setGlobleResponsiveInteractionWithView:(UIView *)view
+{
+    NSArray *arrGesture = view.gestureRecognizers;
+    if (arrGesture == nil)
+    {
+        view.gestureRecognizers = self.gestureRecognizers;
+    }
+    else
+    {
+        NSArray *newGesture = [arrGesture arrayByAddingObjectsFromArray:self.gestureRecognizers];
+        view.gestureRecognizers = newGesture;
+    }
+    
+}
 
 @end
