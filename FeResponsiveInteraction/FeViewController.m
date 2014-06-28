@@ -10,7 +10,7 @@
 #import "UILabel+ResponsiveInteraction.h"
 #import "UIColor+flat.h"
 
-@interface FeViewController ()
+@interface FeViewController () <UIGestureRecognizerDelegate>
 @property (strong, nonatomic) NSMutableArray *arrLabels;
 @property (strong, nonatomic) CAAnimationGroup *groupAnimation;
 
@@ -30,6 +30,7 @@
     [self initCommon];
     
     [self initSampleLabel];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,7 +51,7 @@
 {
     _arrLabels = [NSMutableArray arrayWithCapacity:5];
     
-    for (NSInteger i = 0 ; i < 5 ; i++)
+    for (NSInteger i = 0 ; i < 8 ; i++)
     {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
         label.center = CGPointMake(self.view.center.x, 300 + i * 80);
@@ -59,27 +60,20 @@
         
         // Active effect
         [label activeResponsiveInteraction];
+        [label setGlobleResponsiveInteractionWithView:self.view];
         
         // Add subview
         [_arrLabels addObject:label];
         [self.view addSubview:label];
         
-        /*
-        NSArray *arrGesture = self.view.gestureRecognizers;
-        if (arrGesture == nil)
-        {
-            self.view.gestureRecognizers = label.gestureRecognizers;
-        }
-        else
-        {
-            NSArray *newGesture = [arrGesture arrayByAddingObjectsFromArray:label.gestureRecognizers];
-            self.view.gestureRecognizers = newGesture;
-        }
-         */
     }
     NSLog(@"gesture = %@",self.view.gestureRecognizers);
 }
 
+-(BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
 #pragma mark - Action
 - (IBAction)liftEffectBtnTapped:(id)sender
 {

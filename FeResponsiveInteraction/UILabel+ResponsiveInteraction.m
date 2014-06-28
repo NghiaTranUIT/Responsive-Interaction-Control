@@ -31,12 +31,13 @@ static char key_animation_state;
     
     [self initShadow];
     
-    [self initGesture];
+    //[self initGesture];
     
-    [self initAnimation];
+    [self initAnimationLift];
 }
 -(void) initCommon
 {
+    
     [self set_isActive:YES];
     
     [self set_animation_state:kFe_State_Stop_InGround];
@@ -50,7 +51,7 @@ static char key_animation_state;
     self.layer.shadowOpacity = 0.4f;
     self.layer.shadowOffset = CGSizeMake(0, 2);
 }
--(void) initAnimation
+-(void) initAnimationLift
 {
     ////////////////////////////////////////////
     ////////////////////////////////////////////////
@@ -63,7 +64,7 @@ static char key_animation_state;
         // Transform
         CATransform3D t = CATransform3DIdentity;
         t.m34 = - 1.0f / 800.0f;
-        t = CATransform3DTranslate(t, 0, 0, 13);
+        t = CATransform3DTranslate(t, 0, 0, 80);
         
         CABasicAnimation *liftAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
         liftAnimation.toValue = (id) [NSValue valueWithCATransform3D:t];
@@ -145,7 +146,7 @@ static char key_animation_state;
 }
 -(void) initGesture
 {
-    UILongPressGestureRecognizer *panGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    UILongPressGestureRecognizer *panGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
     panGesture.minimumPressDuration = 0.05f;
     
     [self addGestureRecognizer:panGesture];
@@ -196,8 +197,9 @@ static char key_animation_state;
     NSNumber *state = (NSNumber *)objc_getAssociatedObject(self, &key_animation_state);
     return state.integerValue;
 }
+
 #pragma mark - Gesture
--(void) handleTapGesture:(UILongPressGestureRecognizer *) sender
+-(void) handleGesture:(UILongPressGestureRecognizer *) sender
 {
     
     //NSLog(@"tap label");
@@ -205,10 +207,16 @@ static char key_animation_state;
     switch (sender.state) {
         case UIGestureRecognizerStateBegan:
         {
-            if ([self get_isAnimate_state] == kFe_State_Stop_InGround)
+            CGPoint locationTouch = [sender locationInView:self.superview];
+            if (CGRectContainsPoint(self.frame, locationTouch))
             {
-                [self liftUpAnimation];
+                if ([self get_isAnimate_state] == kFe_State_Stop_InGround)
+                {
+                    CGPoint locationInside = [sender locationInView:self];
+                    [self liftUpAnimationAtPoint:locationInside];
+                }
             }
+            
             
             break;
         }
@@ -220,7 +228,12 @@ static char key_animation_state;
             {
                 if ([self get_isAnimate_state] == kFe_State_Stop_InGround)
                 {
-                    [self liftUpAnimation];
+                    CGPoint locationInside = [sender locationInView:self];
+                    [self liftUpAnimationAtPoint:locationInside];
+                }
+                if ([self get_isAnimate_state] == kFe_State_Stop_InAir)
+                {
+                    
                 }
             }
             else // Out-side
@@ -233,7 +246,9 @@ static char key_animation_state;
                 }
                 else if ([self get_isAnimate_state] == kFe_State_Stop_InAir)
                 {
-                    [self liftDownAnimation];
+                    CGPoint locationInside = [sender locationInView:self];
+                    
+                    [self liftDownAnimationAtPoint:locationInside];
                 }
             }
             break;
@@ -243,7 +258,13 @@ static char key_animation_state;
         {
             if ([self get_isAnimate_state] == kFe_State_Stop_InAir)
             {
-                [self liftDownAnimation];
+                CGPoint locationInside = [sender locationInView:self];
+                [self liftDownAnimationAtPoint:locationInside];
+            }
+            if ([self get_isAnimate_state] == kFe_State_Lifting_Up)
+            {
+                CGPoint locationInside = [sender locationInView:self];
+                [self liftDownAnimationAtPoint:locationInside];
             }
             break;
         }
@@ -253,13 +274,13 @@ static char key_animation_state;
     
 }
 
--(void) liftUpAnimation
+-(void) liftUpAnimationAtPoint:(CGPoint) point
 {
-    CAAnimationGroup *group = [self get_groupAnimation_lift_up];
+    CAAnimationGroup *groupLift = [self get_groupAnimation_lift_up];
     
     // Delegate object
     FeBasicAnimationBlock *blockObj = [[FeBasicAnimationBlock alloc] init];
-    group.delegate = blockObj;
+    groupLift.delegate = blockObj;
     blockObj.blockDidStop = ^
     {
         // Save state
@@ -268,11 +289,12 @@ static char key_animation_state;
         
         CATransform3D t = CATransform3DIdentity;
         t.m34 = - 1.0f / 800.0f;
-        t = CATransform3DTranslate(t, 0, 0, 13);
+        t = CATransform3DTranslate(t, 0, 0, 80);
         
         self.layer.transform = t;
         self.layer.shadowOffset = CGSizeMake(0, 7);
         self.layer.shadowRadius = 5;
+        
         // REMOVE
         [self.layer removeAllAnimations];
         
@@ -282,17 +304,21 @@ static char key_animation_state;
         [self set_animation_state:kFe_State_Stop_InAir];
     };
     
-    // Add animation
-    [self.layer addAnimation:group forKey:@"leftUP"];
+
     
+    // Add animation
+    [self.layer addAnimation:groupLift forKey:@"liftUP"];
+
     // is Animating
     [self set_animation_state:kFe_State_Lifting_Up];
 }
--(void) liftDownAnimation
+-(void) liftDownAnimationAtPoint:(CGPoint) point
 {
     // Reverse animate at end animation
     CAAnimationGroup *group = [self get_groupAnimation_lift_down];
-    
+
+    // Set position
+    //circleLayer.position = point;
     
     // Delegate object
     FeBasicAnimationBlock *blockObj = [[FeBasicAnimationBlock alloc] init];
@@ -335,17 +361,16 @@ static char key_animation_state;
 }
 -(void) setGlobleResponsiveInteractionWithView:(UIView *)view
 {
-    NSArray *arrGesture = view.gestureRecognizers;
-    if (arrGesture == nil)
-    {
-        view.gestureRecognizers = self.gestureRecognizers;
-    }
-    else
-    {
-        NSArray *newGesture = [arrGesture arrayByAddingObjectsFromArray:self.gestureRecognizers];
-        view.gestureRecognizers = newGesture;
-    }
+    UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
+    longGesture.minimumPressDuration = 0.05f;
+    longGesture.delegate = self;
     
+    [view addGestureRecognizer:longGesture];
 }
 
+#pragma mark - Gesture Delegate
+-(BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
 @end

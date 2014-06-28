@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UILabel (ResponsiveInteraction)
+@interface UILabel (ResponsiveInteraction) <UIGestureRecognizerDelegate>
 
 // ACtive
 -(void) activeResponsiveInteraction;
@@ -17,4 +17,5 @@
 -(void) disableResponsiveInteraction;
 
 -(void) setGlobleResponsiveInteractionWithView:(UIView *) view;
+
 @end
