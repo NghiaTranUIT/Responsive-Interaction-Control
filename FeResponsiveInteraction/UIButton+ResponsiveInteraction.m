@@ -213,13 +213,15 @@ static char key_current_touch;
 #pragma mark - Gesture
 -(void) handleGesture:(UILongPressGestureRecognizer *) sender
 {
+    CGPoint locationTouch = [sender locationInView:self.superview];
+    CGPoint locationInside = [sender locationInView:self];
     
-    //NSLog(@"tap label");
+    // Save current touch's point
+    [self set_current_touch:locationTouch];
     
     switch (sender.state) {
         case UIGestureRecognizerStateBegan:
         {
-            CGPoint locationTouch = [sender locationInView:self.superview];
             if (CGRectContainsPoint(self.frame, locationTouch))
             {
                 if ([self get_isAnimate_state] == kFe_State_Stop_InGround)
@@ -234,13 +236,6 @@ static char key_current_touch;
         }
         case UIGestureRecognizerStateChanged:
         {
-            CGPoint locationTouch = [sender locationInView:self.superview];
-            CGPoint locationInside = [sender locationInView:self];
-            
-            // Save current touch's point
-            [self set_current_touch:locationTouch];
-            
-            
             if (CGRectContainsPoint(self.frame, locationTouch))
             {
                 if ([self get_isAnimate_state] == kFe_State_Stop_InGround)
@@ -254,8 +249,6 @@ static char key_current_touch;
             }
             else // Out-side
             {
-                //NSLog(@"out-side - %@",[self get_isAnimate] ? @"YES" : @"NO");
-                
                 if ([self get_isAnimate_state] == kFe_State_Lifting_Up)
                 {
                     
@@ -270,23 +263,21 @@ static char key_current_touch;
         case UIGestureRecognizerStateCancelled:
         case UIGestureRecognizerStateEnded:
         {
-            CGPoint locationTouch = [sender locationInView:self.superview];
-            
             if (CGRectContainsPoint(self.frame, locationTouch))
             {
                 [self sendActionsForControlEvents:UIControlEventTouchUpInside];
             }
             if ([self get_isAnimate_state] == kFe_State_Stop_InAir)
             {
-                CGPoint locationInside = [sender locationInView:self];
                 [self liftDownAnimationAtPoint:locationInside];
             }
             if ([self get_isAnimate_state] == kFe_State_Lifting_Up)
             {
-                CGPoint locationInside = [sender locationInView:self];
                 [self liftDownAnimationAtPoint:locationInside];
             }
             
+            // Release Current touch
+            [self set_current_touch:CGPointMake(-100, -100)];
             
             break;
         }
@@ -305,6 +296,8 @@ static char key_current_touch;
     groupLift.delegate = blockObj;
     blockObj.blockDidStop = ^
     {
+        // Check if animation is stopped, and current touch is not inside cell
+        // Just fire lift down animation.
         if (!CGRectContainsPoint(self.frame, [self get_current_touch]))
         {
             [self liftDownAnimationAtPoint:point];
@@ -383,6 +376,8 @@ static char key_current_touch;
 -(void) activeResponsiveInteraction
 {
     [self initDefault];
+    
+    NSLog(@"imageView = %@",self.imageView);
 }
 -(void) disableResponsiveInteraction
 {

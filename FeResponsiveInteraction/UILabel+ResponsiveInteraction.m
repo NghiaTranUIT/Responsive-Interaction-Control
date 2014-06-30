@@ -278,6 +278,10 @@ static char key_current_touch;
                 CGPoint locationInside = [sender locationInView:self];
                 [self liftDownAnimationAtPoint:locationInside];
             }
+            
+            // Release Current touch
+            [self set_current_touch:CGPointMake(-100, -100)];
+            
             break;
         }
         default:
@@ -295,6 +299,8 @@ static char key_current_touch;
     groupLift.delegate = blockObj;
     blockObj.blockDidStop = ^
     {
+        // Check if animation is stopped, and current touch is not inside cell
+        // Just fire lift down animation.
         if (!CGRectContainsPoint(self.frame, [self get_current_touch]))
         {
             [self liftDownAnimationAtPoint:point];

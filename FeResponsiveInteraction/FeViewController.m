@@ -30,9 +30,9 @@
     
     [self initCommon];
     
-    [self initSampleLabel];
+    //[self initSampleLabel];
     
-    //[self initButton];
+    [self initButton];
     
 }
 
@@ -70,7 +70,6 @@
         [self.view addSubview:label];
         
     }
-    NSLog(@"gesture = %@",self.view.gestureRecognizers);
 }
 -(void) initButton
 {
@@ -96,7 +95,6 @@
         [self.view addSubview:btn];
         
     }
-    NSLog(@"gesture = %@",self.view.gestureRecognizers);
 }
 
 #pragma mark - Action
