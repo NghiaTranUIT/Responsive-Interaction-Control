@@ -24,6 +24,7 @@
 		BA4CEC6D195D228B005FD989 /* UILabel+ResponsiveInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4CEC6C195D228B005FD989 /* UILabel+ResponsiveInteraction.m */; };
 		BA4CEC71195D2399005FD989 /* UIColor+flat.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4CEC70195D2399005FD989 /* UIColor+flat.m */; };
 		BA68A8FA195D69B600144448 /* FeBasicAnimationBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = BA68A8F9195D69B600144448 /* FeBasicAnimationBlock.m */; };
+		BAF74EBD1961496B002DC18A /* UIButton+ResponsiveInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF74EBC1961496B002DC18A /* UIButton+ResponsiveInteraction.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,8 @@
 		BA4CEC70195D2399005FD989 /* UIColor+flat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+flat.m"; sourceTree = "<group>"; };
 		BA68A8F8195D69B600144448 /* FeBasicAnimationBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeBasicAnimationBlock.h; sourceTree = "<group>"; };
 		BA68A8F9195D69B600144448 /* FeBasicAnimationBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeBasicAnimationBlock.m; sourceTree = "<group>"; };
+		BAF74EBB1961496B002DC18A /* UIButton+ResponsiveInteraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ResponsiveInteraction.h"; sourceTree = "<group>"; };
+		BAF74EBC1961496B002DC18A /* UIButton+ResponsiveInteraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ResponsiveInteraction.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +173,8 @@
 				BA68A8F9195D69B600144448 /* FeBasicAnimationBlock.m */,
 				BA4CEC6B195D228A005FD989 /* UILabel+ResponsiveInteraction.h */,
 				BA4CEC6C195D228B005FD989 /* UILabel+ResponsiveInteraction.m */,
+				BAF74EBB1961496B002DC18A /* UIButton+ResponsiveInteraction.h */,
+				BAF74EBC1961496B002DC18A /* UIButton+ResponsiveInteraction.m */,
 			);
 			name = "Responsive Interaction";
 			sourceTree = "<group>";
@@ -290,6 +295,7 @@
 				BA4CEC4C195D2058005FD989 /* FeViewController.m in Sources */,
 				BA4CEC46195D2058005FD989 /* FeAppDelegate.m in Sources */,
 				BA4CEC71195D2399005FD989 /* UIColor+flat.m in Sources */,
+				BAF74EBD1961496B002DC18A /* UIButton+ResponsiveInteraction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

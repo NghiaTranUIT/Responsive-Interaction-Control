@@ -1,12 +1,12 @@
 //
-//  UILabel+ResponsiveInteraction.m
+//  UIButton+ResponsiveInteraction.m
 //  FeResponsiveInteraction
 //
-//  Created by Nghia Tran on 6/27/14.
+//  Created by Nghia Tran on 6/30/14.
 //  Copyright (c) 2014 Fe. All rights reserved.
 //
 
-#import "UILabel+ResponsiveInteraction.h"
+#import "UIButton+ResponsiveInteraction.h"
 #import "FeBasicAnimationBlock.h"
 #import <objc/runtime.h>
 
@@ -22,7 +22,7 @@ static char key_animation_state;
 #define kFe_State_Lifting_Up 3
 #define kFe_State_Lifting_Down 4
 
-@implementation UILabel (ResponsiveInteraction)
+@implementation UIButton (ResponsiveInteraction)
 
 #pragma mark - Init
 -(void) initDefault
@@ -256,6 +256,12 @@ static char key_animation_state;
         case UIGestureRecognizerStateCancelled:
         case UIGestureRecognizerStateEnded:
         {
+            CGPoint locationTouch = [sender locationInView:self.superview];
+            
+            if (CGRectContainsPoint(self.frame, locationTouch))
+            {
+                [self sendActionsForControlEvents:UIControlEventTouchUpInside];
+            }
             if ([self get_isAnimate_state] == kFe_State_Stop_InAir)
             {
                 CGPoint locationInside = [sender locationInView:self];
@@ -266,6 +272,8 @@ static char key_animation_state;
                 CGPoint locationInside = [sender locationInView:self];
                 [self liftDownAnimationAtPoint:locationInside];
             }
+            
+            
             break;
         }
         default:
@@ -304,11 +312,11 @@ static char key_animation_state;
         [self set_animation_state:kFe_State_Stop_InAir];
     };
     
-
+    
     
     // Add animation
     [self.layer addAnimation:groupLift forKey:@"liftUP"];
-
+    
     // is Animating
     [self set_animation_state:kFe_State_Lifting_Up];
 }
@@ -316,7 +324,7 @@ static char key_animation_state;
 {
     // Reverse animate at end animation
     CAAnimationGroup *group = [self get_groupAnimation_lift_down];
-
+    
     // Set position
     //circleLayer.position = point;
     
@@ -361,10 +369,12 @@ static char key_animation_state;
 }
 -(void) setGlobleResponsiveInteractionWithView:(UIView *)view
 {
-    
     UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
-    longGesture.minimumPressDuration = 0.01f;
+    longGesture.minimumPressDuration = 0.03f;
     longGesture.delegate = self;
+    
+    // Require fail target action
+    //[longGesture requireGestureRecognizerToFail:self.gestureRecognizers[0]];
     
     [view addGestureRecognizer:longGesture];
 }
