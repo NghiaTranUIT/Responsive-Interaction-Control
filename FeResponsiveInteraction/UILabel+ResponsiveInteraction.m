@@ -15,6 +15,7 @@ static char key_isActive;
 static char key_groupAnimation_lift_up;
 static char key_groupAnimation_lift_down;
 static char key_animation_state;
+static char key_current_touch;
 
 // Define State
 #define kFe_State_Stop_InGround 1
@@ -197,7 +198,16 @@ static char key_animation_state;
     NSNumber *state = (NSNumber *)objc_getAssociatedObject(self, &key_animation_state);
     return state.integerValue;
 }
-
+// Current touch
+-(void) set_current_touch:(CGPoint) point
+{
+    objc_setAssociatedObject(self, &key_current_touch, [NSValue valueWithCGPoint:point], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+-(CGPoint) get_current_touch
+{
+    NSValue *value = (NSValue *)objc_getAssociatedObject(self, &key_current_touch);
+    return value.CGPointValue;
+}
 #pragma mark - Gesture
 -(void) handleGesture:(UILongPressGestureRecognizer *) sender
 {
@@ -223,12 +233,16 @@ static char key_animation_state;
         case UIGestureRecognizerStateChanged:
         {
             CGPoint locationTouch = [sender locationInView:self.superview];
+            CGPoint locationInside = [sender locationInView:self];
+            
+            // Save current touch's point
+            [self set_current_touch:locationTouch];
+            
             
             if (CGRectContainsPoint(self.frame, locationTouch))
             {
                 if ([self get_isAnimate_state] == kFe_State_Stop_InGround)
                 {
-                    CGPoint locationInside = [sender locationInView:self];
                     [self liftUpAnimationAtPoint:locationInside];
                 }
                 if ([self get_isAnimate_state] == kFe_State_Stop_InAir)
@@ -246,8 +260,6 @@ static char key_animation_state;
                 }
                 else if ([self get_isAnimate_state] == kFe_State_Stop_InAir)
                 {
-                    CGPoint locationInside = [sender locationInView:self];
-                    
                     [self liftDownAnimationAtPoint:locationInside];
                 }
             }
@@ -283,25 +295,34 @@ static char key_animation_state;
     groupLift.delegate = blockObj;
     blockObj.blockDidStop = ^
     {
-        // Save state
-        [CATransaction begin];
-        [CATransaction disableActions];
+        if (!CGRectContainsPoint(self.frame, [self get_current_touch]))
+        {
+            [self liftDownAnimationAtPoint:point];
+        }
+        else
+        {
+            // Save state
+            [CATransaction begin];
+            [CATransaction disableActions];
+            
+            CATransform3D t = CATransform3DIdentity;
+            t.m34 = - 1.0f / 800.0f;
+            t = CATransform3DTranslate(t, 0, 0, 200);
+            
+            self.layer.transform = t;
+            self.layer.shadowOffset = CGSizeMake(0, 7);
+            self.layer.shadowRadius = 5;
+            
+            // REMOVE
+            [self.layer removeAllAnimations];
+            
+            [CATransaction commit];
+            
+            // State
+            [self set_animation_state:kFe_State_Stop_InAir];
+        }
         
-        CATransform3D t = CATransform3DIdentity;
-        t.m34 = - 1.0f / 800.0f;
-        t = CATransform3DTranslate(t, 0, 0, 200);
         
-        self.layer.transform = t;
-        self.layer.shadowOffset = CGSizeMake(0, 7);
-        self.layer.shadowRadius = 5;
-        
-        // REMOVE
-        [self.layer removeAllAnimations];
-        
-        [CATransaction commit];
-        
-        // State
-        [self set_animation_state:kFe_State_Stop_InAir];
     };
     
 

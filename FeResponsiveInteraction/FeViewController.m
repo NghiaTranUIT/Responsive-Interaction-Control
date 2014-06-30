@@ -30,9 +30,9 @@
     
     [self initCommon];
     
-    //[self initSampleLabel];
+    [self initSampleLabel];
     
-    [self initButton];
+    //[self initButton];
     
 }
 

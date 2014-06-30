@@ -15,6 +15,7 @@ static char key_isActive;
 static char key_groupAnimation_lift_up;
 static char key_groupAnimation_lift_down;
 static char key_animation_state;
+static char key_current_touch;
 
 // Define State
 #define kFe_State_Stop_InGround 1
@@ -56,7 +57,8 @@ static char key_animation_state;
     ////////////////////////////////////////////
     ////////////////////////////////////////////////
     // Define
-    CGFloat duration = 0.3f;
+    CGFloat durationUp = 0.3f;
+    CGFloat durationDown = 0.2f;
     
     if (YES)
     {
@@ -68,7 +70,7 @@ static char key_animation_state;
         
         CABasicAnimation *liftAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
         liftAnimation.toValue = (id) [NSValue valueWithCATransform3D:t];
-        liftAnimation.duration = duration;
+        liftAnimation.duration = durationUp;
         liftAnimation.fillMode = kCAFillModeForwards;
         liftAnimation.removedOnCompletion = NO;
         liftAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
@@ -76,7 +78,7 @@ static char key_animation_state;
         // Shadow Offset
         CABasicAnimation *shadowOffsetAnimation = [CABasicAnimation animationWithKeyPath:@"shadowOffset"];
         shadowOffsetAnimation.toValue = (id) [NSValue valueWithCGSize:CGSizeMake(0, 7)];
-        shadowOffsetAnimation.duration = duration;
+        shadowOffsetAnimation.duration = durationUp;
         shadowOffsetAnimation.fillMode = kCAFillModeForwards;
         shadowOffsetAnimation.removedOnCompletion = NO;
         shadowOffsetAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
@@ -84,14 +86,14 @@ static char key_animation_state;
         // Shadow Radius
         CABasicAnimation *shadowRaidusAnimation = [CABasicAnimation animationWithKeyPath:@"shadowRadius"];
         shadowRaidusAnimation.toValue = (id) [NSNumber numberWithFloat:5];
-        shadowRaidusAnimation.duration = duration;
+        shadowRaidusAnimation.duration = durationUp;
         shadowRaidusAnimation.fillMode = kCAFillModeForwards;
         shadowRaidusAnimation.removedOnCompletion = NO;
         shadowRaidusAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
         
         CAAnimationGroup *group = [CAAnimationGroup animation];
         group = [CAAnimationGroup animation];
-        group.duration = duration;
+        group.duration = durationUp;
         group.animations = @[liftAnimation, shadowOffsetAnimation, shadowRaidusAnimation];
         group.fillMode = kCAFillModeForwards;
         group.removedOnCompletion = NO;
@@ -111,7 +113,7 @@ static char key_animation_state;
         
         CABasicAnimation *liftAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
         liftAnimation.toValue = (id) [NSValue valueWithCATransform3D:t];
-        liftAnimation.duration = duration;
+        liftAnimation.duration = durationDown;
         liftAnimation.fillMode = kCAFillModeForwards;
         liftAnimation.removedOnCompletion = NO;
         liftAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
@@ -119,7 +121,7 @@ static char key_animation_state;
         // Shadow Offset
         CABasicAnimation *shadowOffsetAnimation = [CABasicAnimation animationWithKeyPath:@"shadowOffset"];
         shadowOffsetAnimation.toValue = (id) [NSValue valueWithCGSize:CGSizeMake(0, 2)];
-        shadowOffsetAnimation.duration = duration;
+        shadowOffsetAnimation.duration = durationDown;
         shadowOffsetAnimation.fillMode = kCAFillModeForwards;
         shadowOffsetAnimation.removedOnCompletion = NO;
         shadowOffsetAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
@@ -127,14 +129,14 @@ static char key_animation_state;
         // Shadow Radius
         CABasicAnimation *shadowRaidusAnimation = [CABasicAnimation animationWithKeyPath:@"shadowRadius"];
         shadowRaidusAnimation.toValue = (id) [NSNumber numberWithFloat:3];
-        shadowRaidusAnimation.duration = duration;
+        shadowRaidusAnimation.duration = durationDown;
         shadowRaidusAnimation.fillMode = kCAFillModeForwards;
         shadowRaidusAnimation.removedOnCompletion = NO;
         shadowRaidusAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
         
         CAAnimationGroup *group = [CAAnimationGroup animation];
         group = [CAAnimationGroup animation];
-        group.duration = duration;
+        group.duration = durationDown;
         group.animations = @[liftAnimation, shadowOffsetAnimation, shadowRaidusAnimation];
         group.fillMode = kCAFillModeForwards;
         group.removedOnCompletion = NO;
@@ -198,6 +200,16 @@ static char key_animation_state;
     return state.integerValue;
 }
 
+// Current touch
+-(void) set_current_touch:(CGPoint) point
+{
+    objc_setAssociatedObject(self, &key_current_touch, [NSValue valueWithCGPoint:point], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+-(CGPoint) get_current_touch
+{
+    NSValue *value = (NSValue *)objc_getAssociatedObject(self, &key_current_touch);
+    return value.CGPointValue;
+}
 #pragma mark - Gesture
 -(void) handleGesture:(UILongPressGestureRecognizer *) sender
 {
@@ -223,12 +235,16 @@ static char key_animation_state;
         case UIGestureRecognizerStateChanged:
         {
             CGPoint locationTouch = [sender locationInView:self.superview];
+            CGPoint locationInside = [sender locationInView:self];
+            
+            // Save current touch's point
+            [self set_current_touch:locationTouch];
+            
             
             if (CGRectContainsPoint(self.frame, locationTouch))
             {
                 if ([self get_isAnimate_state] == kFe_State_Stop_InGround)
                 {
-                    CGPoint locationInside = [sender locationInView:self];
                     [self liftUpAnimationAtPoint:locationInside];
                 }
                 if ([self get_isAnimate_state] == kFe_State_Stop_InAir)
@@ -246,8 +262,6 @@ static char key_animation_state;
                 }
                 else if ([self get_isAnimate_state] == kFe_State_Stop_InAir)
                 {
-                    CGPoint locationInside = [sender locationInView:self];
-                    
                     [self liftDownAnimationAtPoint:locationInside];
                 }
             }
@@ -291,25 +305,32 @@ static char key_animation_state;
     groupLift.delegate = blockObj;
     blockObj.blockDidStop = ^
     {
-        // Save state
-        [CATransaction begin];
-        [CATransaction disableActions];
-        
-        CATransform3D t = CATransform3DIdentity;
-        t.m34 = - 1.0f / 800.0f;
-        t = CATransform3DTranslate(t, 0, 0, 200);
-        
-        self.layer.transform = t;
-        self.layer.shadowOffset = CGSizeMake(0, 7);
-        self.layer.shadowRadius = 5;
-        
-        // REMOVE
-        [self.layer removeAllAnimations];
-        
-        [CATransaction commit];
-        
-        // State
-        [self set_animation_state:kFe_State_Stop_InAir];
+        if (!CGRectContainsPoint(self.frame, [self get_current_touch]))
+        {
+            [self liftDownAnimationAtPoint:point];
+        }
+        else
+        {
+            // Save state
+            [CATransaction begin];
+            [CATransaction disableActions];
+            
+            CATransform3D t = CATransform3DIdentity;
+            t.m34 = - 1.0f / 800.0f;
+            t = CATransform3DTranslate(t, 0, 0, 200);
+            
+            self.layer.transform = t;
+            self.layer.shadowOffset = CGSizeMake(0, 7);
+            self.layer.shadowRadius = 5;
+            
+            // REMOVE
+            [self.layer removeAllAnimations];
+            
+            [CATransaction commit];
+            
+            // State
+            [self set_animation_state:kFe_State_Stop_InAir];
+        }
     };
     
     
@@ -384,4 +405,45 @@ static char key_animation_state;
 {
     return YES;
 }
+
+/*
+ // At runtime this method will be called as buttonWithType:
+ -(void) customeLayoutSubviews
+ {
+ // ---Add in custom code here---
+ for(UIView* buttonSubview in self.subviews) {
+ if([buttonSubview isKindOfClass:[UIImageView class]])
+ {
+ NSLog(@"transform");
+ buttonSubview.layer.transform = CATransform3DMakeTranslation(150, 0, 0);
+ }
+ }
+ // This line at runtime does not go into an infinite loop
+ // because it will call the real method instead of ours.
+ [self customeLayoutSubviews];
+ 
+ for(UIView* buttonSubview in self.subviews) {
+ if([buttonSubview isKindOfClass:[UIImageView class]])
+ {
+ NSLog(@"transform");
+ buttonSubview.layer.transform = CATransform3DMakeTranslation(150, 0, 0);
+ }
+ }
+ }
+ 
+ // Swaps our custom implementation with the default one
+ // +load is called when a class is loaded into the system
+ + (void) load
+ {
+ SEL origSel = @selector(layoutSubviews);
+ 
+ SEL newSel = @selector(customeLayoutSubviews);
+ 
+ Class buttonClass = [UIButton class];
+ 
+ Method origMethod = class_getInstanceMethod(buttonClass, origSel);
+ Method newMethod = class_getInstanceMethod(buttonClass, newSel);
+ method_exchangeImplementations(origMethod, newMethod);
+ }
+ */
 @end
