@@ -10,14 +10,17 @@
 #import "UILabel+ResponsiveInteraction.h"
 #import "UIColor+flat.h"
 #import "UIButton+ResponsiveInteraction.h"
+#import "FeRadialButton.h"
 
 @interface FeViewController () <UIGestureRecognizerDelegate>
 @property (strong, nonatomic) NSMutableArray *arrLabels;
 @property (strong, nonatomic) CAAnimationGroup *groupAnimation;
+@property (strong, nonatomic) FeRadialButton *radialBtn;
 
 ///////////////////
 -(void) initCommon;
 -(void) initSampleLabel;
+-(void) initRadialButton;
 
 @end
 
@@ -32,8 +35,15 @@
     
     //[self initSampleLabel];
     
-    [self initButton];
+    //[self initButton];
     
+    
+    [self initRadialButton];
+    
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(50, 50, 200, 50)];
+    [btn setImage:[UIImage imageNamed:@"icon_btn"] forState:UIControlStateNormal];
+    
+    [self.view addSubview:btn];
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,7 +57,7 @@
 -(void) initCommon
 {
     // Set background
-    self.view.backgroundColor = [UIColor colorWithHexCode:@"#fafafa"];
+    self.view.backgroundColor = [UIColor colorWithHexCode:@"#19B5FE"];
     
 }
 -(void) initSampleLabel
@@ -96,60 +106,36 @@
         
     }
 }
-
-#pragma mark - Action
-- (IBAction)liftEffectBtnTapped:(id)sender
+-(void) initRadialButton
 {
+    FeRadialButtonOption *option_1 = [FeRadialButtonOption radialButtonOptionWithImage:[UIImage imageNamed:@"icon_btn"] target:self action:@selector(btn_1_tapped:) forEvent:UIControlEventTouchUpInside atIndex:0];
+    FeRadialButtonOption *option_2 = [FeRadialButtonOption radialButtonOptionWithImage:[UIImage imageNamed:@"icon_option"] target:self action:@selector(btn_2_tapped:) forEvent:UIControlEventTouchUpInside atIndex:1];
     
-    ////////////
-    // Define
-    CGFloat duration = 0.6f;
+    _radialBtn = [[FeRadialButton alloc] initWithFrame:CGRectMake(self.view.bounds.size.width / 2, 400, 200, 50) radialButtonOptions:@[option_1 , option_2]];
     
-    /////////////
-    // Transform
-    CATransform3D t = CATransform3DIdentity;
-    t.m34 = - 1.0f / 800.0f;
-    t = CATransform3DTranslate(t, 0, 0, 13);
-    
-    CABasicAnimation *liftAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
-    liftAnimation.toValue = (id) [NSValue valueWithCATransform3D:t];
-    liftAnimation.duration = duration;
-    liftAnimation.fillMode = kCAFillModeForwards;
-    liftAnimation.removedOnCompletion = NO;
-    
-    
-    // Shadow Offset
-    CABasicAnimation *shadowOffsetAnimation = [CABasicAnimation animationWithKeyPath:@"shadowOffset"];
-    shadowOffsetAnimation.toValue = (id) [NSValue valueWithCGSize:CGSizeMake(0, 7)];
-    shadowOffsetAnimation.duration = duration;
-    shadowOffsetAnimation.fillMode = kCAFillModeForwards;
-    shadowOffsetAnimation.removedOnCompletion = NO;
-    
-
-    // Shadow Radius
-    CABasicAnimation *shadowRaidusAnimation = [CABasicAnimation animationWithKeyPath:@"shadowRadius"];
-    shadowRaidusAnimation.toValue = (id) [NSNumber numberWithFloat:5];
-    shadowRaidusAnimation.duration = duration;
-    shadowRaidusAnimation.fillMode = kCAFillModeForwards;
-    shadowRaidusAnimation.removedOnCompletion = NO;
-
-    
-    _groupAnimation = [CAAnimationGroup animation];
-    _groupAnimation.duration = duration;
-    _groupAnimation.animations = @[liftAnimation, shadowOffsetAnimation, shadowRaidusAnimation];
-    _groupAnimation.fillMode = kCAFillModeForwards;
-    _groupAnimation.removedOnCompletion = NO;
-    
-    CGFloat delay = 0;
-    for (NSInteger i = 0; i < _arrLabels.count; i++)
-    {
-        UILabel *label = _arrLabels[i];
-        [label.layer addAnimation:_groupAnimation forKey:@"group"];
-        label.layer.beginTime = CACurrentMediaTime() + delay;
-        
-        delay += 0.2f;
-    }
-    //[_sampleLabel_2.layer addAnimation:group forKey:@"group"];
+    [self.view addSubview:_radialBtn];
+}
+#pragma mark - Action
+-(void) btn_1_tapped:(UIButton *) sender
+{
+    NSLog(@"btn 1 tapped");
+    [_radialBtn animateToIndex:1 withCompletionBlock:^(BOOL finish) {
+        NSLog(@"animate completion");
+    }];
+}
+-(void) btn_2_tapped:(UIButton *) sender
+{
+    NSLog(@"btn 2 tapped");
+    [_radialBtn animateToIndex:0 withCompletionBlock:^(BOOL finish) {
+        NSLog(@"animate completion");
+    }];
+}
+-(void) btn_3_tapped:(UIButton *) sender
+{
+    NSLog(@"btn 3 tapped");
+    [_radialBtn animateToIndex:3 withCompletionBlock:^(BOOL finish) {
+        NSLog(@"animate completion");
+    }];
 }
 -(void) btnTapped:(UIButton *) sender
 {
