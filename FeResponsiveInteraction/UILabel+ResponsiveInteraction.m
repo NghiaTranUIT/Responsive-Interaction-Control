@@ -309,7 +309,7 @@ static char key_current_touch;
         {
             // Save state
             [CATransaction begin];
-            [CATransaction disableActions];
+            [CATransaction setValue:@YES forKey:kCATransactionDisableActions];
             
             CATransform3D t = CATransform3DIdentity;
             t.m34 = - 1.0f / 800.0f;
@@ -354,7 +354,7 @@ static char key_current_touch;
     {
         // Save state
         [CATransaction begin];
-        [CATransaction disableActions];
+        [CATransaction setValue:@YES forKey:kCATransactionDisableActions];
         
         CATransform3D t = CATransform3DIdentity;
         

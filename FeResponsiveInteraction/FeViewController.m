@@ -110,8 +110,10 @@
 {
     FeRadialButtonOption *option_1 = [FeRadialButtonOption radialButtonOptionWithImage:[UIImage imageNamed:@"icon_btn"] target:self action:@selector(btn_1_tapped:) forEvent:UIControlEventTouchUpInside atIndex:0];
     FeRadialButtonOption *option_2 = [FeRadialButtonOption radialButtonOptionWithImage:[UIImage imageNamed:@"icon_option"] target:self action:@selector(btn_2_tapped:) forEvent:UIControlEventTouchUpInside atIndex:1];
+    FeRadialButtonOption *option_3 = [FeRadialButtonOption radialButtonOptionWithImage:[UIImage imageNamed:@"icon_back"] target:self action:@selector(btn_3_tapped:) forEvent:UIControlEventTouchUpInside atIndex:1];
     
-    _radialBtn = [[FeRadialButton alloc] initWithFrame:CGRectMake(self.view.bounds.size.width / 2, 400, 200, 50) radialButtonOptions:@[option_1 , option_2]];
+    
+    _radialBtn = [[FeRadialButton alloc] initWithFrame:CGRectMake(self.view.bounds.size.width / 2, 400, 200, 50) radialButtonOptions:@[option_1 , option_2, option_3]];
     
     [self.view addSubview:_radialBtn];
 }
@@ -126,14 +128,14 @@
 -(void) btn_2_tapped:(UIButton *) sender
 {
     NSLog(@"btn 2 tapped");
-    [_radialBtn animateToIndex:0 withCompletionBlock:^(BOOL finish) {
+    [_radialBtn animateToIndex:2 withCompletionBlock:^(BOOL finish) {
         NSLog(@"animate completion");
     }];
 }
 -(void) btn_3_tapped:(UIButton *) sender
 {
     NSLog(@"btn 3 tapped");
-    [_radialBtn animateToIndex:3 withCompletionBlock:^(BOOL finish) {
+    [_radialBtn animateToIndex:0 withCompletionBlock:^(BOOL finish) {
         NSLog(@"animate completion");
     }];
 }

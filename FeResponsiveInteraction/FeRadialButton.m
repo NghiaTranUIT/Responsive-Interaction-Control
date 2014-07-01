@@ -104,10 +104,11 @@
 -(void) initCircleLayer
 {
     _circleLayer = [CALayer layer];
-    _circleLayer.frame = self.imageView.bounds;
-    _circleLayer.cornerRadius = _circleLayer.bounds.size.width / 2;
-    _circleLayer.backgroundColor = [UIColor colorWithWhite:1 alpha:0.6f].CGColor;
+    _circleLayer.frame = CGRectMake(0, 0, self.imageView.bounds.size.width + 30, self.imageView.bounds.size.height + 30);
+    _circleLayer.cornerRadius = (_circleLayer.bounds.size.width) / 2;
+    _circleLayer.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8f].CGColor;
     _circleLayer.transform = CATransform3DMakeScale(0, 0, 0);
+    _circleLayer.position = CGPointMake(self.imageView.bounds.size.width / 2, self.imageView.bounds.size.height / 2);
     
     [self.imageView.layer insertSublayer:_circleLayer atIndex:0];
 }
@@ -260,7 +261,7 @@
         
         // exchange layer;
         [CATransaction begin];
-        [CATransaction disableActions];
+        [CATransaction setValue:@YES forKey:kCATransactionDisableActions];
         
         [_currentImageLayer removeAllAnimations];
         _currentImageLayer.transform = CATransform3DIdentity;
