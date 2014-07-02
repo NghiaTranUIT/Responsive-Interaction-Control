@@ -1,12 +1,12 @@
 //
-//  UIButton+ResponsiveInteraction.m
+//  UITableViewCell+ResponsiveInteraction.m
 //  FeResponsiveInteraction
 //
-//  Created by Nghia Tran on 6/30/14.
+//  Created by Nghia Tran on 7/2/14.
 //  Copyright (c) 2014 Fe. All rights reserved.
 //
 
-#import "UIButton+ResponsiveInteraction.h"
+#import "UITableViewCell+ResponsiveInteraction.h"
 #import "FeBasicAnimationBlock.h"
 #import <objc/runtime.h>
 
@@ -16,8 +16,6 @@ static char key_groupAnimation_lift_up;
 static char key_groupAnimation_lift_down;
 static char key_animation_state;
 static char key_current_touch;
-static char key_longPressGesture;
-static char key_isAlreadyInit;
 
 // Define State
 #define kFe_State_Stop_InGround 1
@@ -25,7 +23,7 @@ static char key_isAlreadyInit;
 #define kFe_State_Lifting_Up 3
 #define kFe_State_Lifting_Down 4
 
-@implementation UIButton (ResponsiveInteraction)
+@implementation UITableViewCell (ResponsiveInteraction)
 
 #pragma mark - Init
 -(void) initDefault
@@ -34,13 +32,12 @@ static char key_isAlreadyInit;
     
     [self initShadow];
     
-    [self initGesture];
+    //[self initGesture];
     
     [self initAnimationLift];
 }
 -(void) initCommon
 {
-    [self set_isAlreadyInit:YES];
     
     [self set_isActive:YES];
     
@@ -60,8 +57,7 @@ static char key_isAlreadyInit;
     ////////////////////////////////////////////
     ////////////////////////////////////////////////
     // Define
-    CGFloat durationUp = 0.3f;
-    CGFloat durationDown = 0.2f;
+    CGFloat duration = 0.3f;
     
     if (YES)
     {
@@ -73,7 +69,7 @@ static char key_isAlreadyInit;
         
         CABasicAnimation *liftAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
         liftAnimation.toValue = (id) [NSValue valueWithCATransform3D:t];
-        liftAnimation.duration = durationUp;
+        liftAnimation.duration = duration;
         liftAnimation.fillMode = kCAFillModeForwards;
         liftAnimation.removedOnCompletion = NO;
         liftAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
@@ -81,7 +77,7 @@ static char key_isAlreadyInit;
         // Shadow Offset
         CABasicAnimation *shadowOffsetAnimation = [CABasicAnimation animationWithKeyPath:@"shadowOffset"];
         shadowOffsetAnimation.toValue = (id) [NSValue valueWithCGSize:CGSizeMake(0, 7)];
-        shadowOffsetAnimation.duration = durationUp;
+        shadowOffsetAnimation.duration = duration;
         shadowOffsetAnimation.fillMode = kCAFillModeForwards;
         shadowOffsetAnimation.removedOnCompletion = NO;
         shadowOffsetAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
@@ -89,14 +85,14 @@ static char key_isAlreadyInit;
         // Shadow Radius
         CABasicAnimation *shadowRaidusAnimation = [CABasicAnimation animationWithKeyPath:@"shadowRadius"];
         shadowRaidusAnimation.toValue = (id) [NSNumber numberWithFloat:5];
-        shadowRaidusAnimation.duration = durationUp;
+        shadowRaidusAnimation.duration = duration;
         shadowRaidusAnimation.fillMode = kCAFillModeForwards;
         shadowRaidusAnimation.removedOnCompletion = NO;
         shadowRaidusAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
         
         CAAnimationGroup *group = [CAAnimationGroup animation];
         group = [CAAnimationGroup animation];
-        group.duration = durationUp;
+        group.duration = duration;
         group.animations = @[liftAnimation, shadowOffsetAnimation, shadowRaidusAnimation];
         group.fillMode = kCAFillModeForwards;
         group.removedOnCompletion = NO;
@@ -116,7 +112,7 @@ static char key_isAlreadyInit;
         
         CABasicAnimation *liftAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
         liftAnimation.toValue = (id) [NSValue valueWithCATransform3D:t];
-        liftAnimation.duration = durationDown;
+        liftAnimation.duration = duration;
         liftAnimation.fillMode = kCAFillModeForwards;
         liftAnimation.removedOnCompletion = NO;
         liftAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
@@ -124,7 +120,7 @@ static char key_isAlreadyInit;
         // Shadow Offset
         CABasicAnimation *shadowOffsetAnimation = [CABasicAnimation animationWithKeyPath:@"shadowOffset"];
         shadowOffsetAnimation.toValue = (id) [NSValue valueWithCGSize:CGSizeMake(0, 2)];
-        shadowOffsetAnimation.duration = durationDown;
+        shadowOffsetAnimation.duration = duration;
         shadowOffsetAnimation.fillMode = kCAFillModeForwards;
         shadowOffsetAnimation.removedOnCompletion = NO;
         shadowOffsetAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
@@ -132,14 +128,14 @@ static char key_isAlreadyInit;
         // Shadow Radius
         CABasicAnimation *shadowRaidusAnimation = [CABasicAnimation animationWithKeyPath:@"shadowRadius"];
         shadowRaidusAnimation.toValue = (id) [NSNumber numberWithFloat:3];
-        shadowRaidusAnimation.duration = durationDown;
+        shadowRaidusAnimation.duration = duration;
         shadowRaidusAnimation.fillMode = kCAFillModeForwards;
         shadowRaidusAnimation.removedOnCompletion = NO;
         shadowRaidusAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
         
         CAAnimationGroup *group = [CAAnimationGroup animation];
         group = [CAAnimationGroup animation];
-        group.duration = durationDown;
+        group.duration = duration;
         group.animations = @[liftAnimation, shadowOffsetAnimation, shadowRaidusAnimation];
         group.fillMode = kCAFillModeForwards;
         group.removedOnCompletion = NO;
@@ -151,14 +147,10 @@ static char key_isAlreadyInit;
 }
 -(void) initGesture
 {
-    UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
-    longGesture.minimumPressDuration = 0.03f;
-    longGesture.delegate = self;
+    UILongPressGestureRecognizer *panGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
+    panGesture.minimumPressDuration = 0.05f;
     
-    [self addGestureRecognizer:longGesture];
-    
-    // Save
-    [self set_longPessGesture:longGesture];
+    [self addGestureRecognizer:panGesture];
 }
 
 #pragma mark - Getter / Setter
@@ -167,18 +159,11 @@ static char key_isAlreadyInit;
 -(void) set_isActive:(BOOL) isActive
 {
     objc_setAssociatedObject(self, &key_isActive, [NSNumber numberWithBool:isActive], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
-    // Active / disable gesture
-    UILongPressGestureRecognizer *longGesture = [self get_longPressGesture];
-    if (longGesture)
-    {
-        longGesture.enabled = isActive;
-    }
 }
--(NSNumber *) get_isActive
+-(BOOL) get_isActive
 {
     NSNumber *isActive = (NSNumber *) objc_getAssociatedObject(self, &key_isActive);
-    return isActive;
+    return isActive.boolValue;
 }
 
 // groupAnimation
@@ -213,7 +198,6 @@ static char key_isAlreadyInit;
     NSNumber *state = (NSNumber *)objc_getAssociatedObject(self, &key_animation_state);
     return state.integerValue;
 }
-
 // Current touch
 -(void) set_current_touch:(CGPoint) point
 {
@@ -224,42 +208,16 @@ static char key_isAlreadyInit;
     NSValue *value = (NSValue *)objc_getAssociatedObject(self, &key_current_touch);
     return value.CGPointValue;
 }
-
-// Gesture
--(void) set_longPessGesture:(UILongPressGestureRecognizer *) longPressGesture
-{
-    objc_setAssociatedObject(self, &key_longPressGesture, longPressGesture, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
--(UILongPressGestureRecognizer *) get_longPressGesture
-{
-    UILongPressGestureRecognizer *gesture = (UILongPressGestureRecognizer *) objc_getAssociatedObject(self, &key_longPressGesture);
-    
-    return gesture;
-}
-
-// Already init
--(void) set_isAlreadyInit:(BOOL) toogle
-{
-    objc_setAssociatedObject(self, &key_isAlreadyInit, [NSNumber numberWithBool:toogle], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
--(NSNumber *) get_isAlreadyInit
-{
-    NSNumber *number = (NSNumber *) objc_getAssociatedObject(self, &key_isAlreadyInit);
-    return number;
-}
-
 #pragma mark - Gesture
 -(void) handleGesture:(UILongPressGestureRecognizer *) sender
 {
-    CGPoint locationTouch = [sender locationInView:self.superview];
-    CGPoint locationInside = [sender locationInView:self];
     
-    // Save current touch's point
-    [self set_current_touch:locationTouch];
+    //NSLog(@"tap label");
     
     switch (sender.state) {
         case UIGestureRecognizerStateBegan:
         {
+            CGPoint locationTouch = [sender locationInView:self.superview];
             if (CGRectContainsPoint(self.frame, locationTouch))
             {
                 if ([self get_isAnimate_state] == kFe_State_Stop_InGround)
@@ -274,6 +232,13 @@ static char key_isAlreadyInit;
         }
         case UIGestureRecognizerStateChanged:
         {
+            CGPoint locationTouch = [sender locationInView:self.superview];
+            CGPoint locationInside = [sender locationInView:self];
+            
+            // Save current touch's point
+            [self set_current_touch:locationTouch];
+            
+            
             if (CGRectContainsPoint(self.frame, locationTouch))
             {
                 if ([self get_isAnimate_state] == kFe_State_Stop_InGround)
@@ -287,6 +252,8 @@ static char key_isAlreadyInit;
             }
             else // Out-side
             {
+                //NSLog(@"out-side - %@",[self get_isAnimate] ? @"YES" : @"NO");
+                
                 if ([self get_isAnimate_state] == kFe_State_Lifting_Up)
                 {
                     
@@ -301,16 +268,14 @@ static char key_isAlreadyInit;
         case UIGestureRecognizerStateCancelled:
         case UIGestureRecognizerStateEnded:
         {
-            if (CGRectContainsPoint(self.frame, locationTouch))
-            {
-                [self sendActionsForControlEvents:UIControlEventTouchUpInside];
-            }
             if ([self get_isAnimate_state] == kFe_State_Stop_InAir)
             {
+                CGPoint locationInside = [sender locationInView:self];
                 [self liftDownAnimationAtPoint:locationInside];
             }
             if ([self get_isAnimate_state] == kFe_State_Lifting_Up)
             {
+                CGPoint locationInside = [sender locationInView:self];
                 [self liftDownAnimationAtPoint:locationInside];
             }
             
@@ -362,6 +327,8 @@ static char key_isAlreadyInit;
             // State
             [self set_animation_state:kFe_State_Stop_InAir];
         }
+        
+        
     };
     
     
@@ -413,56 +380,20 @@ static char key_isAlreadyInit;
 #pragma mark - Action
 -(void) activeResponsiveInteraction
 {
-    NSNumber *isAlreadyInit = [self get_isAlreadyInit];
-    if (isAlreadyInit == nil || isAlreadyInit == NO)
-    {
-        [self initDefault];
-    }
-    
-    // Active
-    NSNumber *isActive = [self get_isActive];
-    if (isActive)
-    {
-        [self set_isActive:YES];
-    }
-    else
-    {
-        return;
-    }
+    [self initDefault];
 }
 -(void) disableResponsiveInteraction
 {
-    NSNumber *isActive = [self get_isActive];
-    if (isActive)
-    {
-        [self set_isActive:NO];
-    }
-    else
-    {
-        return;
-    }
+    
 }
--(void) setGlobalResponsiveInteractionWithView:(UIView *) view;
+-(void) setGlobleResponsiveInteractionWithView:(UIView *)view
 {
-    // Check if we have added longgesture before
-    UILongPressGestureRecognizer *longGesture = [self get_longPressGesture];
-    if (longGesture)
-    {
-        // remove
-        [self removeGestureRecognizer:longGesture];
-        
-        // Add to view
-        [view addGestureRecognizer:longGesture];
-    }
-    else
-    {
-        UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
-        longGesture.minimumPressDuration = 0.03f;
-        longGesture.delegate = self;
-        
-        [view addGestureRecognizer:longGesture];
-
-    }
+    
+    UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
+    longGesture.minimumPressDuration = 0.01f;
+    longGesture.delegate = self;
+    
+    [view addGestureRecognizer:longGesture];
 }
 
 #pragma mark - Gesture Delegate
@@ -470,45 +401,4 @@ static char key_isAlreadyInit;
 {
     return YES;
 }
-
-/*
- // At runtime this method will be called as buttonWithType:
- -(void) customeLayoutSubviews
- {
- // ---Add in custom code here---
- for(UIView* buttonSubview in self.subviews) {
- if([buttonSubview isKindOfClass:[UIImageView class]])
- {
- NSLog(@"transform");
- buttonSubview.layer.transform = CATransform3DMakeTranslation(150, 0, 0);
- }
- }
- // This line at runtime does not go into an infinite loop
- // because it will call the real method instead of ours.
- [self customeLayoutSubviews];
- 
- for(UIView* buttonSubview in self.subviews) {
- if([buttonSubview isKindOfClass:[UIImageView class]])
- {
- NSLog(@"transform");
- buttonSubview.layer.transform = CATransform3DMakeTranslation(150, 0, 0);
- }
- }
- }
- 
- // Swaps our custom implementation with the default one
- // +load is called when a class is loaded into the system
- + (void) load
- {
- SEL origSel = @selector(layoutSubviews);
- 
- SEL newSel = @selector(customeLayoutSubviews);
- 
- Class buttonClass = [UIButton class];
- 
- Method origMethod = class_getInstanceMethod(buttonClass, origSel);
- Method newMethod = class_getInstanceMethod(buttonClass, newSel);
- method_exchangeImplementations(origMethod, newMethod);
- }
- */
 @end

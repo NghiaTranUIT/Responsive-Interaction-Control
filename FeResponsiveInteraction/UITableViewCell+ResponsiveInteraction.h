@@ -1,21 +1,21 @@
 //
-//  UILabel+ResponsiveInteraction.h
+//  UITableViewCell+ResponsiveInteraction.h
 //  FeResponsiveInteraction
 //
-//  Created by Nghia Tran on 6/27/14.
+//  Created by Nghia Tran on 7/2/14.
 //  Copyright (c) 2014 Fe. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface UILabel (ResponsiveInteraction) <UIGestureRecognizerDelegate>
-
+@interface UITableViewCell (ResponsiveInteraction)
 // Active
 -(void) activeResponsiveInteraction;
 
 // Disable
 -(void) disableResponsiveInteraction;
 
--(void) setGlobalResponsiveInteractionWithView:(UIView *) view;
+// Globel
+-(void) setGlobleResponsiveInteractionWithView:(UIView *) view;
 
 @end

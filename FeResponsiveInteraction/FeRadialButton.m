@@ -68,7 +68,7 @@
 }
 -(void) initCommon
 {
-    _durationAnimation = 0.6f;
+    _durationAnimation = 0.8f;
     _currentIndex = 0;
     self.clipsToBounds = NO;
 }
@@ -85,6 +85,7 @@
     // First object
     FeRadialButtonOption *firstOption = arr[0];
     _currentRadialButton = firstOption;
+    
     // Image
     // Set image for init UIImageView itself
     // and set fake image view
@@ -257,11 +258,9 @@
         // set current index
         _currentIndex = index;
         
-        
-        
         // exchange layer;
         [CATransaction begin];
-        [CATransaction setValue:@YES forKey:kCATransactionDisableActions];
+        [CATransaction setDisableActions:YES];
         
         [_currentImageLayer removeAllAnimations];
         _currentImageLayer.transform = CATransform3DIdentity;
@@ -270,7 +269,9 @@
         
         [CATransaction commit];
         
-        
+        // Call block
+        if (completionBlock)
+            completionBlock(YES);
     };
     
     FeBasicAnimationBlock *animationBlock_2 = [[FeBasicAnimationBlock alloc] init];
@@ -286,6 +287,15 @@
     [_currentImageLayer addAnimation:_animationGroupFirst forKey:@"first"];
     [_nextImageLayer addAnimation:_animationGroupSecond forKey:@"second"];
     [_circleLayer addAnimation:_animationGroupOverlay forKey:@"overlay"];
+}
+-(void) animateToNextIndexWithCompletionBlock:(FeRaidlaButtonCompletionBlock)completionBlock
+{
+    NSInteger nextIndex = _currentIndex + 1;
+    if (nextIndex >= _arrayOfButton.count)
+        nextIndex = 0;
+    
+    // animate
+    [self animateToIndex:nextIndex withCompletionBlock:completionBlock];
 }
 -(void) initImageLayerAtIndex:(NSInteger)index
 {

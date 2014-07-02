@@ -16,12 +16,14 @@ static char key_groupAnimation_lift_up;
 static char key_groupAnimation_lift_down;
 static char key_animation_state;
 static char key_current_touch;
+static char key_isAlreadyInit;
 
 // Define State
 #define kFe_State_Stop_InGround 1
 #define kFe_State_Stop_InAir 2
 #define kFe_State_Lifting_Up 3
 #define kFe_State_Lifting_Down 4
+static char key_longPressGesture;
 
 @implementation UILabel (ResponsiveInteraction)
 
@@ -32,12 +34,13 @@ static char key_current_touch;
     
     [self initShadow];
     
-    //[self initGesture];
+    [self initGesture];
     
     [self initAnimationLift];
 }
 -(void) initCommon
 {
+    [self set_isAlreadyInit:YES];
     
     [self set_isActive:YES];
     
@@ -147,10 +150,14 @@ static char key_current_touch;
 }
 -(void) initGesture
 {
-    UILongPressGestureRecognizer *panGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
-    panGesture.minimumPressDuration = 0.05f;
+    UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
+    longGesture.minimumPressDuration = 0.03f;
+    longGesture.delegate = self;
     
-    [self addGestureRecognizer:panGesture];
+    [self addGestureRecognizer:longGesture];
+    
+    // Save
+    [self set_longPessGesture:longGesture];
 }
 
 #pragma mark - Getter / Setter
@@ -159,11 +166,18 @@ static char key_current_touch;
 -(void) set_isActive:(BOOL) isActive
 {
     objc_setAssociatedObject(self, &key_isActive, [NSNumber numberWithBool:isActive], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
+    // Active / disable gesture
+    UILongPressGestureRecognizer *longGesture = [self get_longPressGesture];
+    if (longGesture)
+    {
+        longGesture.enabled = isActive;
+    }
 }
--(BOOL) get_isActive
+-(NSNumber *) get_isActive
 {
     NSNumber *isActive = (NSNumber *) objc_getAssociatedObject(self, &key_isActive);
-    return isActive.boolValue;
+    return isActive;
 }
 
 // groupAnimation
@@ -208,6 +222,30 @@ static char key_current_touch;
     NSValue *value = (NSValue *)objc_getAssociatedObject(self, &key_current_touch);
     return value.CGPointValue;
 }
+
+// Gesture
+-(void) set_longPessGesture:(UILongPressGestureRecognizer *) longPressGesture
+{
+    objc_setAssociatedObject(self, &key_longPressGesture, longPressGesture, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+-(UILongPressGestureRecognizer *) get_longPressGesture
+{
+    UILongPressGestureRecognizer *gesture = (UILongPressGestureRecognizer *) objc_getAssociatedObject(self, &key_longPressGesture);
+    
+    return gesture;
+}
+
+// Already init
+-(void) set_isAlreadyInit:(BOOL) toogle
+{
+    objc_setAssociatedObject(self, &key_isAlreadyInit, [NSNumber numberWithBool:toogle], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+-(NSNumber *) get_isAlreadyInit
+{
+    NSNumber *number = (NSNumber *) objc_getAssociatedObject(self, &key_isAlreadyInit);
+    return number;
+}
+
 #pragma mark - Gesture
 -(void) handleGesture:(UILongPressGestureRecognizer *) sender
 {
@@ -309,7 +347,7 @@ static char key_current_touch;
         {
             // Save state
             [CATransaction begin];
-            [CATransaction setValue:@YES forKey:kCATransactionDisableActions];
+            [CATransaction setDisableActions:YES];
             
             CATransform3D t = CATransform3DIdentity;
             t.m34 = - 1.0f / 800.0f;
@@ -354,7 +392,7 @@ static char key_current_touch;
     {
         // Save state
         [CATransaction begin];
-        [CATransaction setValue:@YES forKey:kCATransactionDisableActions];
+        [CATransaction setDisableActions:YES];
         
         CATransform3D t = CATransform3DIdentity;
         
@@ -380,20 +418,56 @@ static char key_current_touch;
 #pragma mark - Action
 -(void) activeResponsiveInteraction
 {
-    [self initDefault];
+    NSNumber *isAlreadyInit = [self get_isAlreadyInit];
+    if (isAlreadyInit == nil || isAlreadyInit == NO)
+    {
+        [self initDefault];
+    }
+    
+    // Active
+    NSNumber *isActive = [self get_isActive];
+    if (isActive)
+    {
+        [self set_isActive:YES];
+    }
+    else
+    {
+        return;
+    }
 }
 -(void) disableResponsiveInteraction
 {
-    
+    NSNumber *isActive = [self get_isActive];
+    if (isActive)
+    {
+        [self set_isActive:NO];
+    }
+    else
+    {
+        return;
+    }
 }
--(void) setGlobleResponsiveInteractionWithView:(UIView *)view
+-(void) setGlobalResponsiveInteractionWithView:(UIView *) view;
 {
-    
-    UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
-    longGesture.minimumPressDuration = 0.01f;
-    longGesture.delegate = self;
-    
-    [view addGestureRecognizer:longGesture];
+    // Check if we have added longgesture before
+    UILongPressGestureRecognizer *longGesture = [self get_longPressGesture];
+    if (longGesture)
+    {
+        // remove
+        [self removeGestureRecognizer:longGesture];
+        
+        // Add to view
+        [view addGestureRecognizer:longGesture];
+    }
+    else
+    {
+        UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
+        longGesture.minimumPressDuration = 0.03f;
+        longGesture.delegate = self;
+        
+        [view addGestureRecognizer:longGesture];
+        
+    }
 }
 
 #pragma mark - Gesture Delegate

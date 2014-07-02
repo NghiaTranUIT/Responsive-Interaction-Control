@@ -35,15 +35,9 @@
     
     //[self initSampleLabel];
     
-    //[self initButton];
+    [self initButton];
     
-    
-    [self initRadialButton];
-    
-    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(50, 50, 200, 50)];
-    [btn setImage:[UIImage imageNamed:@"icon_btn"] forState:UIControlStateNormal];
-    
-    [self.view addSubview:btn];
+    //[self initRadialButton];
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,13 +61,13 @@
     for (NSInteger i = 0 ; i < 8 ; i++)
     {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
-        label.center = CGPointMake(self.view.center.x, 300 + i * 80);
+        label.center = CGPointMake(self.view.center.x - 250, 300 + i * 80);
         label.backgroundColor = [UIColor flatCarrotColor];
         label.tag = i;
         
         // Active effect
         [label activeResponsiveInteraction];
-        [label setGlobleResponsiveInteractionWithView:self.view];
+        [label setGlobalResponsiveInteractionWithView:self.view];
         
         // Add subview
         [_arrLabels addObject:label];
@@ -98,7 +92,7 @@
         
         // Active effect
         [btn activeResponsiveInteraction];
-        [btn setGlobleResponsiveInteractionWithView:self.view];
+        [btn setGlobalResponsiveInteractionWithView:self.view];
         
         // Add subview
         [_arrLabels addObject:btn];
@@ -121,26 +115,28 @@
 -(void) btn_1_tapped:(UIButton *) sender
 {
     NSLog(@"btn 1 tapped");
-    [_radialBtn animateToIndex:1 withCompletionBlock:^(BOOL finish) {
-        NSLog(@"animate completion");
+    [_radialBtn animateToNextIndexWithCompletionBlock:^(BOOL finish) {
+        NSLog(@"titleLabel = %@",sender.titleLabel);
+        
     }];
 }
 -(void) btn_2_tapped:(UIButton *) sender
 {
     NSLog(@"btn 2 tapped");
-    [_radialBtn animateToIndex:2 withCompletionBlock:^(BOOL finish) {
-        NSLog(@"animate completion");
+    [_radialBtn animateToNextIndexWithCompletionBlock:^(BOOL finish) {
+        
     }];
 }
 -(void) btn_3_tapped:(UIButton *) sender
 {
     NSLog(@"btn 3 tapped");
-    [_radialBtn animateToIndex:0 withCompletionBlock:^(BOOL finish) {
-        NSLog(@"animate completion");
+    [_radialBtn animateToNextIndexWithCompletionBlock:^(BOOL finish) {
+        
     }];
 }
 -(void) btnTapped:(UIButton *) sender
 {
     NSLog(@"Button tapped at tag = %ld",(long)sender.tag);
+    [sender disableResponsiveInteraction];
 }
 @end

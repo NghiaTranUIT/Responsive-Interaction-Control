@@ -53,4 +53,7 @@ typedef void (^FeRaidlaButtonCompletionBlock)(BOOL finish);
 
 // Animate to index button
 -(void) animateToIndex:(NSInteger) index withCompletionBlock:(FeRaidlaButtonCompletionBlock) completionBlock;
+
+// Animate To next index
+-(void) animateToNextIndexWithCompletionBlock:(FeRaidlaButtonCompletionBlock) completionBlock;
 @end
