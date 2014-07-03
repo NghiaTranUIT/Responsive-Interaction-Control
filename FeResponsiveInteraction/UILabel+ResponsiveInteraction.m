@@ -420,7 +420,7 @@ static char key_longPressGesture;
     
     // Active
     NSNumber *isActive = [self get_isActive];
-    if (isActive)
+    if (isActive && isActive.boolValue == NO)
     {
         [self set_isActive:YES];
     }

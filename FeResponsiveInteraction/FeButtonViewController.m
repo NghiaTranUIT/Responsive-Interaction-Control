@@ -36,7 +36,7 @@
 -(void) initButton
 {
 
-    for (NSInteger i = 0 ; i < 8 ; i++)
+    for (NSInteger i = 0 ; i < 6 ; i++)
     {
         UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
         btn.center = CGPointMake(self.view.center.x, 300 + i * 80);
@@ -45,7 +45,7 @@
         
         // Action
         [btn addTarget:self action:@selector(btnTapped:) forControlEvents:UIControlEventTouchUpInside];
-        [btn setTitle:@"Button" forState:UIControlStateNormal];
+        [btn setTitle:@"Tap me" forState:UIControlStateNormal];
         
         // Active effect
         [btn activeResponsiveInteraction];

@@ -42,7 +42,7 @@
             </objects>
             <point key="canvasLocation" x="1953" y="-194"/>
         </scene>
-        <!--Fe Samples Table View Controller-->
+        <!--Fe Samples Table View Controller - Protocol-->
         <scene sceneID="nkD-za-iaZ">
             <objects>
                 <tableViewController id="yYY-JL-wHP" customClass="FeSamplesTableViewController" sceneMemberID="viewController">
@@ -93,49 +93,12 @@
                                             <segue destination="VPV-Fe-ln8" kind="push" id="1wU-Ui-nSw"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Bd2-cj-Rt7" style="IBUITableViewCellStyleDefault" id="Uhg-fv-dPO">
-                                        <rect key="frame" x="0.0" y="207" width="768" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Uhg-fv-dPO" id="sio-r6-QSH">
-                                            <rect key="frame" x="0.0" y="0.0" width="735" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Radial UIButton" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Bd2-cj-Rt7">
-                                                    <rect key="frame" x="15" y="0.0" width="718" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="PC2-SA-Pxv" style="IBUITableViewCellStyleDefault" id="mB8-WC-HZl">
-                                        <rect key="frame" x="0.0" y="251" width="768" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mB8-WC-HZl" id="E0O-Dz-eNC">
-                                            <rect key="frame" x="0.0" y="0.0" width="735" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Table View Cell" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PC2-SA-Pxv">
-                                                    <rect key="frame" x="15" y="0.0" width="718" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="Ygn-eQ-vQX" kind="push" id="3Id-Mj-P9y"/>
-                                        </connections>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Radial Effect" id="eYj-99-vTP">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="EW0-zY-sCX" style="IBUITableViewCellStyleDefault" id="XBC-20-Q4e">
-                                        <rect key="frame" x="0.0" y="343" width="768" height="44"/>
+                                        <rect key="frame" x="0.0" y="255" width="768" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XBC-20-Q4e" id="LVT-FH-Afl">
                                             <rect key="frame" x="0.0" y="0.0" width="735" height="43"/>
@@ -162,49 +125,11 @@
                             <outlet property="delegate" destination="yYY-JL-wHP" id="0bA-iN-oy4"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Aoj-1e-4JN"/>
+                    <navigationItem key="navigationItem" title="Protocol" id="Aoj-1e-4JN"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zOX-1j-oJ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="910" y="153"/>
-        </scene>
-        <!--Fe Responsive Interaction Table View Controller-->
-        <scene sceneID="fye-Oa-WoC">
-            <objects>
-                <tableViewController id="Ygn-eQ-vQX" customClass="FeResponsiveInteractionTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="85" sectionHeaderHeight="22" sectionFooterHeight="22" id="SuZ-cQ-QKt">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FeCell" textLabel="lBl-SK-HGr" rowHeight="85" style="IBUITableViewCellStyleDefault" id="TlB-uO-7Ns" customClass="FeCell">
-                                <rect key="frame" x="0.0" y="86" width="768" height="85"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TlB-uO-7Ns" id="pRW-rg-JHf">
-                                    <rect key="frame" x="0.0" y="0.0" width="768" height="84"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="My Cells" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lBl-SK-HGr">
-                                            <rect key="frame" x="15" y="0.0" width="738" height="84"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="Ygn-eQ-vQX" id="Hzv-et-hw9"/>
-                            <outlet property="delegate" destination="Ygn-eQ-vQX" id="suf-Nc-Nj6"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="bhs-hJ-xBS"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WP6-Uv-9Bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="982" y="1334"/>
         </scene>
         <!--Fe Radial Button View Controller - Radial Button-->
         <scene sceneID="Pce-Sp-kBO">
