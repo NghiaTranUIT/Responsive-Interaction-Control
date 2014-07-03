@@ -249,13 +249,15 @@ static char key_longPressGesture;
 #pragma mark - Gesture
 -(void) handleGesture:(UILongPressGestureRecognizer *) sender
 {
+    CGPoint locationTouch = [sender locationInView:self.superview];
+    CGPoint locationInside = [sender locationInView:self];
     
-    //NSLog(@"tap label");
+    // Save current touch's point
+    [self set_current_touch:locationTouch];
     
     switch (sender.state) {
         case UIGestureRecognizerStateBegan:
         {
-            CGPoint locationTouch = [sender locationInView:self.superview];
             if (CGRectContainsPoint(self.frame, locationTouch))
             {
                 if ([self get_isAnimate_state] == kFe_State_Stop_InGround)
@@ -270,13 +272,6 @@ static char key_longPressGesture;
         }
         case UIGestureRecognizerStateChanged:
         {
-            CGPoint locationTouch = [sender locationInView:self.superview];
-            CGPoint locationInside = [sender locationInView:self];
-            
-            // Save current touch's point
-            [self set_current_touch:locationTouch];
-            
-            
             if (CGRectContainsPoint(self.frame, locationTouch))
             {
                 if ([self get_isAnimate_state] == kFe_State_Stop_InGround)
@@ -290,8 +285,6 @@ static char key_longPressGesture;
             }
             else // Out-side
             {
-                //NSLog(@"out-side - %@",[self get_isAnimate] ? @"YES" : @"NO");
-                
                 if ([self get_isAnimate_state] == kFe_State_Lifting_Up)
                 {
                     
@@ -306,14 +299,16 @@ static char key_longPressGesture;
         case UIGestureRecognizerStateCancelled:
         case UIGestureRecognizerStateEnded:
         {
+            if (CGRectContainsPoint(self.frame, locationTouch))
+            {
+                
+            }
             if ([self get_isAnimate_state] == kFe_State_Stop_InAir)
             {
-                CGPoint locationInside = [sender locationInView:self];
                 [self liftDownAnimationAtPoint:locationInside];
             }
             if ([self get_isAnimate_state] == kFe_State_Lifting_Up)
             {
-                CGPoint locationInside = [sender locationInView:self];
                 [self liftDownAnimationAtPoint:locationInside];
             }
             
@@ -325,7 +320,6 @@ static char key_longPressGesture;
         default:
             break;
     }
-    
 }
 
 -(void) liftUpAnimationAtPoint:(CGPoint) point

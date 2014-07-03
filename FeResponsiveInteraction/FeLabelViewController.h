@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FeViewController : UIViewController
+@interface FeLabelViewController : UIViewController
 
 @end

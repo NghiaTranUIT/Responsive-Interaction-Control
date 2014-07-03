@@ -9,13 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface UITableViewCell (ResponsiveInteraction)
-// Active
+// ACtive
 -(void) activeResponsiveInteraction;
 
 // Disable
 -(void) disableResponsiveInteraction;
 
-// Globel
--(void) setGlobleResponsiveInteractionWithView:(UIView *) view;
+-(void) setGlobalResponsiveInteractionWithView:(UIView *) view;
 
 @end
