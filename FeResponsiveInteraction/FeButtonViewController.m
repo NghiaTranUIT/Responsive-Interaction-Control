@@ -39,7 +39,15 @@
     for (NSInteger i = 0 ; i < 6 ; i++)
     {
         UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
-        btn.center = CGPointMake(self.view.center.x, 300 + i * 80);
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
+        {
+            btn.center = CGPointMake(self.view.center.x, 300 + i * 80);
+        }
+        else
+        {
+            btn.center = CGPointMake(self.view.center.x, 120 + i * 80);
+        }
+        
         btn.backgroundColor = [UIColor flatCarrotColor];
         btn.tag = i;
         

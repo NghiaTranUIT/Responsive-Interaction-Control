@@ -29,6 +29,7 @@
 		BA6837FD1965448A003746F9 /* FeSamplesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6837FC1965448A003746F9 /* FeSamplesTableViewController.m */; };
 		BA68380B19654778003746F9 /* FeButtonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA68380A19654778003746F9 /* FeButtonViewController.m */; };
 		BA68380F1965488A003746F9 /* FeRadialButtonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA68380E1965488A003746F9 /* FeRadialButtonViewController.m */; };
+		BA68381119655001003746F9 /* Storyboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA68381019655001003746F9 /* Storyboard_iPhone.storyboard */; };
 		BA68A8FA195D69B600144448 /* FeBasicAnimationBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = BA68A8F9195D69B600144448 /* FeBasicAnimationBlock.m */; };
 		BAC4936E1961C17D00A19A0D /* FeRadialButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC4936D1961C17D00A19A0D /* FeRadialButton.m */; };
 		BAF74EBD1961496B002DC18A /* UIButton+ResponsiveInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF74EBC1961496B002DC18A /* UIButton+ResponsiveInteraction.m */; };
@@ -77,6 +78,7 @@
 		BA68380A19654778003746F9 /* FeButtonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeButtonViewController.m; sourceTree = "<group>"; };
 		BA68380D1965488A003746F9 /* FeRadialButtonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeRadialButtonViewController.h; sourceTree = "<group>"; };
 		BA68380E1965488A003746F9 /* FeRadialButtonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeRadialButtonViewController.m; sourceTree = "<group>"; };
+		BA68381019655001003746F9 /* Storyboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard_iPhone.storyboard; sourceTree = "<group>"; };
 		BA68A8F8195D69B600144448 /* FeBasicAnimationBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeBasicAnimationBlock.h; sourceTree = "<group>"; };
 		BA68A8F9195D69B600144448 /* FeBasicAnimationBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeBasicAnimationBlock.m; sourceTree = "<group>"; };
 		BAC4936C1961C17D00A19A0D /* FeRadialButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeRadialButton.h; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				BA4CEC47195D2058005FD989 /* Main.storyboard */,
 				BA4CEC4D195D2058005FD989 /* Images.xcassets */,
 				BA4CEC3C195D2058005FD989 /* Supporting Files */,
+				BA68381019655001003746F9 /* Storyboard_iPhone.storyboard */,
 			);
 			path = FeResponsiveInteraction;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 				BA4CEC40195D2058005FD989 /* InfoPlist.strings in Resources */,
 				BA3F15841962A6E50011BEAA /* icon_back@2x.png in Resources */,
 				BA3F15851962A6E50011BEAA /* icon_option@2x.png in Resources */,
+				BA68381119655001003746F9 /* Storyboard_iPhone.storyboard in Resources */,
 				BA4CEC49195D2058005FD989 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -553,6 +557,7 @@
 				INFOPLIST_FILE = "FeResponsiveInteraction/FeResponsiveInteraction-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -569,6 +574,7 @@
 				INFOPLIST_FILE = "FeResponsiveInteraction/FeResponsiveInteraction-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

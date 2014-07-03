@@ -49,10 +49,19 @@
 }
 -(void) initSampleLabel
 {
-    for (NSInteger i = 0 ; i < 8 ; i++)
+    for (NSInteger i = 0 ; i < 5 ; i++)
     {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
-        label.center = CGPointMake(self.view.center.x, 300 + i * 80);
+        
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
+        {
+            label.center = CGPointMake(self.view.center.x, 300 + i * 80);
+        }
+        else
+        {
+            label.center = CGPointMake(self.view.center.x, 120 + i * 80);
+        }
+        
         label.backgroundColor = [UIColor colorWithHexCode:@"#1BBC9B"];
         label.tag = i;
         label.textAlignment = NSTextAlignmentCenter;
