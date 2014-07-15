@@ -14,13 +14,16 @@ Responsive Interaction Control contain many catogories and customize control.
 
 ![GIF](http://nghiatran.me/wp-content/uploads/2014/07/UILabel_Responsive_Interaction.gif)
 
-** UIButton+ResponsiveInteraction** : UIButton Category for Material response Effect.
+**UIButton+ResponsiveInteraction** : UIButton Category for Material response Effect.
+
 ![GIF](http://nghiatran.me/wp-content/uploads/2014/07/UIButton_Responsive_Interaction.gif)
 
-** FeRadialButton** : Sublcass of UIButton for Radial Action effect.
+**FeRadialButton** : Sublcass of UIButton for Radial Action effect.
+
 ![GIF](http://nghiatran.me/wp-content/uploads/2014/07/RadialButton.gif)
 
-** FeRippleButton** : Sublcass of UIButton for Surface Rection effect.
+**FeRippleButton** : Sublcass of UIButton for Surface Rection effect.
+
 ![GIF](http://nghiatran.me/wp-content/uploads/2014/07/RippleButton.gif)
 
 ## Requirement
