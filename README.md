@@ -5,8 +5,6 @@ Bring whole-new Android's animation L to iOS
 
 Inspired by Material Design Google.
 
-[![IMAGE ALT TEXT HERE](http://nghiatran.me/wp-content/uploads/2014/07/ResponsiveInteractionControl.png)](https://www.youtube.com/watch?v=r84BhwLcVoo&feature=youtu.be)
-
 Youtube : https://www.youtube.com/watch?v=r84BhwLcVoo&feature=youtu.be
 
 ## In Brief
