@@ -27,11 +27,6 @@ So You must ensure your project has iOS version more than iOS 7.0.
 And compatible with ARC or non-ARC.
 
 ## How to use
-FeSlideFilter use Data Source / Delgate pattern like UITableView.
-
-Just provide filtered UIImage
-
-and Title for each Filter.
 
 ### UIButton, UILabel catogeries
 Ex :
