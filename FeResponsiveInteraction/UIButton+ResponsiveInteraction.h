@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @interface UIButton (ResponsiveInteraction) <UIGestureRecognizerDelegate>
-// ACtive
+
+// Active
 -(void) activeResponsiveInteraction;
 
 // Disable
 -(void) disableResponsiveInteraction;
 
+// Track Global touch
 -(void) setGlobalResponsiveInteractionWithView:(UIView *) view;
 
 @end
