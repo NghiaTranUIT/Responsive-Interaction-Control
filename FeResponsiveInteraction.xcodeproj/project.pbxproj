@@ -24,17 +24,18 @@
 		BA4CEC57195D2058005FD989 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4CEC39195D2058005FD989 /* UIKit.framework */; };
 		BA4CEC5F195D2058005FD989 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA4CEC5D195D2058005FD989 /* InfoPlist.strings */; };
 		BA4CEC61195D2058005FD989 /* FeResponsiveInteractionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4CEC60195D2058005FD989 /* FeResponsiveInteractionTests.m */; };
-		BA4CEC6D195D228B005FD989 /* UILabel+ResponsiveInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4CEC6C195D228B005FD989 /* UILabel+ResponsiveInteraction.m */; };
 		BA4CEC71195D2399005FD989 /* UIColor+flat.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4CEC70195D2399005FD989 /* UIColor+flat.m */; };
 		BA6837FD1965448A003746F9 /* FeSamplesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6837FC1965448A003746F9 /* FeSamplesTableViewController.m */; };
 		BA68380B19654778003746F9 /* FeButtonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA68380A19654778003746F9 /* FeButtonViewController.m */; };
 		BA68380F1965488A003746F9 /* FeRadialButtonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA68380E1965488A003746F9 /* FeRadialButtonViewController.m */; };
 		BA68381119655001003746F9 /* Storyboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA68381019655001003746F9 /* Storyboard_iPhone.storyboard */; };
-		BA68A8FA195D69B600144448 /* FeBasicAnimationBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = BA68A8F9195D69B600144448 /* FeBasicAnimationBlock.m */; };
-		BA7C8D6C1974DF9F00ABE2F9 /* FeRippleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7C8D6B1974DF9F00ABE2F9 /* FeRippleButton.m */; };
 		BA7C8D701974EB1600ABE2F9 /* FeRippleButtonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7C8D6F1974EB1600ABE2F9 /* FeRippleButtonViewController.m */; };
-		BAC4936E1961C17D00A19A0D /* FeRadialButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC4936D1961C17D00A19A0D /* FeRadialButton.m */; };
-		BAF74EBD1961496B002DC18A /* UIButton+ResponsiveInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF74EBC1961496B002DC18A /* UIButton+ResponsiveInteraction.m */; };
+		BA98AF431A7FAF4500C93538 /* FeBasicAnimationBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = BA98AF381A7FAF4500C93538 /* FeBasicAnimationBlock.m */; };
+		BA98AF441A7FAF4500C93538 /* FeRadialButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BA98AF3A1A7FAF4500C93538 /* FeRadialButton.m */; };
+		BA98AF451A7FAF4500C93538 /* FeRippleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BA98AF3C1A7FAF4500C93538 /* FeRippleButton.m */; };
+		BA98AF461A7FAF4500C93538 /* UIButton+ResponsiveInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = BA98AF3E1A7FAF4500C93538 /* UIButton+ResponsiveInteraction.m */; };
+		BA98AF471A7FAF4500C93538 /* UIColor+flat.m in Sources */ = {isa = PBXBuildFile; fileRef = BA98AF401A7FAF4500C93538 /* UIColor+flat.m */; };
+		BA98AF481A7FAF4500C93538 /* UILabel+ResponsiveInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = BA98AF421A7FAF4500C93538 /* UILabel+ResponsiveInteraction.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,8 +71,6 @@
 		BA4CEC5C195D2058005FD989 /* FeResponsiveInteractionTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FeResponsiveInteractionTests-Info.plist"; sourceTree = "<group>"; };
 		BA4CEC5E195D2058005FD989 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BA4CEC60195D2058005FD989 /* FeResponsiveInteractionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeResponsiveInteractionTests.m; sourceTree = "<group>"; };
-		BA4CEC6B195D228A005FD989 /* UILabel+ResponsiveInteraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+ResponsiveInteraction.h"; sourceTree = "<group>"; };
-		BA4CEC6C195D228B005FD989 /* UILabel+ResponsiveInteraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+ResponsiveInteraction.m"; sourceTree = "<group>"; };
 		BA4CEC6F195D2399005FD989 /* UIColor+flat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+flat.h"; sourceTree = "<group>"; };
 		BA4CEC70195D2399005FD989 /* UIColor+flat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+flat.m"; sourceTree = "<group>"; };
 		BA6837FB1965448A003746F9 /* FeSamplesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeSamplesTableViewController.h; sourceTree = "<group>"; };
@@ -81,16 +80,20 @@
 		BA68380D1965488A003746F9 /* FeRadialButtonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeRadialButtonViewController.h; sourceTree = "<group>"; };
 		BA68380E1965488A003746F9 /* FeRadialButtonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeRadialButtonViewController.m; sourceTree = "<group>"; };
 		BA68381019655001003746F9 /* Storyboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard_iPhone.storyboard; sourceTree = "<group>"; };
-		BA68A8F8195D69B600144448 /* FeBasicAnimationBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeBasicAnimationBlock.h; sourceTree = "<group>"; };
-		BA68A8F9195D69B600144448 /* FeBasicAnimationBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeBasicAnimationBlock.m; sourceTree = "<group>"; };
-		BA7C8D6A1974DF9F00ABE2F9 /* FeRippleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeRippleButton.h; sourceTree = "<group>"; };
-		BA7C8D6B1974DF9F00ABE2F9 /* FeRippleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeRippleButton.m; sourceTree = "<group>"; };
 		BA7C8D6E1974EB1600ABE2F9 /* FeRippleButtonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeRippleButtonViewController.h; sourceTree = "<group>"; };
 		BA7C8D6F1974EB1600ABE2F9 /* FeRippleButtonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeRippleButtonViewController.m; sourceTree = "<group>"; };
-		BAC4936C1961C17D00A19A0D /* FeRadialButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeRadialButton.h; sourceTree = "<group>"; };
-		BAC4936D1961C17D00A19A0D /* FeRadialButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeRadialButton.m; sourceTree = "<group>"; };
-		BAF74EBB1961496B002DC18A /* UIButton+ResponsiveInteraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ResponsiveInteraction.h"; sourceTree = "<group>"; };
-		BAF74EBC1961496B002DC18A /* UIButton+ResponsiveInteraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ResponsiveInteraction.m"; sourceTree = "<group>"; };
+		BA98AF371A7FAF4500C93538 /* FeBasicAnimationBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeBasicAnimationBlock.h; sourceTree = "<group>"; };
+		BA98AF381A7FAF4500C93538 /* FeBasicAnimationBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeBasicAnimationBlock.m; sourceTree = "<group>"; };
+		BA98AF391A7FAF4500C93538 /* FeRadialButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeRadialButton.h; sourceTree = "<group>"; };
+		BA98AF3A1A7FAF4500C93538 /* FeRadialButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeRadialButton.m; sourceTree = "<group>"; };
+		BA98AF3B1A7FAF4500C93538 /* FeRippleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeRippleButton.h; sourceTree = "<group>"; };
+		BA98AF3C1A7FAF4500C93538 /* FeRippleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeRippleButton.m; sourceTree = "<group>"; };
+		BA98AF3D1A7FAF4500C93538 /* UIButton+ResponsiveInteraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ResponsiveInteraction.h"; sourceTree = "<group>"; };
+		BA98AF3E1A7FAF4500C93538 /* UIButton+ResponsiveInteraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ResponsiveInteraction.m"; sourceTree = "<group>"; };
+		BA98AF3F1A7FAF4500C93538 /* UIColor+flat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+flat.h"; sourceTree = "<group>"; };
+		BA98AF401A7FAF4500C93538 /* UIColor+flat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+flat.m"; sourceTree = "<group>"; };
+		BA98AF411A7FAF4500C93538 /* UILabel+ResponsiveInteraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+ResponsiveInteraction.h"; sourceTree = "<group>"; };
+		BA98AF421A7FAF4500C93538 /* UILabel+ResponsiveInteraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+ResponsiveInteraction.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,11 +220,6 @@
 		BA4CEC6A195D2235005FD989 /* Responsive Interaction */ = {
 			isa = PBXGroup;
 			children = (
-				BA7C8D691974DF7700ABE2F9 /* Ribble */,
-				BAC493681961B5B700A19A0D /* Animation Delegate */,
-				BAC493671961B56700A19A0D /* UIButton */,
-				BAC493661961B55F00A19A0D /* UILabel */,
-				BAC493651961B55000A19A0D /* Radial Button */,
 			);
 			name = "Responsive Interaction";
 			sourceTree = "<group>";
@@ -229,6 +227,7 @@
 		BA4CEC72195D239B005FD989 /* Resuable Code */ = {
 			isa = PBXGroup;
 			children = (
+				BA98AF361A7FAF4500C93538 /* Class */,
 				BA4CEC6F195D2399005FD989 /* UIColor+flat.h */,
 				BA4CEC70195D2399005FD989 /* UIColor+flat.m */,
 			);
@@ -280,15 +279,6 @@
 			name = "Radial Button";
 			sourceTree = "<group>";
 		};
-		BA7C8D691974DF7700ABE2F9 /* Ribble */ = {
-			isa = PBXGroup;
-			children = (
-				BA7C8D6A1974DF9F00ABE2F9 /* FeRippleButton.h */,
-				BA7C8D6B1974DF9F00ABE2F9 /* FeRippleButton.m */,
-			);
-			name = Ribble;
-			sourceTree = "<group>";
-		};
 		BA7C8D6D1974EAF300ABE2F9 /* Ripple View */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,40 +288,23 @@
 			name = "Ripple View";
 			sourceTree = "<group>";
 		};
-		BAC493651961B55000A19A0D /* Radial Button */ = {
+		BA98AF361A7FAF4500C93538 /* Class */ = {
 			isa = PBXGroup;
 			children = (
-				BAC4936C1961C17D00A19A0D /* FeRadialButton.h */,
-				BAC4936D1961C17D00A19A0D /* FeRadialButton.m */,
+				BA98AF371A7FAF4500C93538 /* FeBasicAnimationBlock.h */,
+				BA98AF381A7FAF4500C93538 /* FeBasicAnimationBlock.m */,
+				BA98AF391A7FAF4500C93538 /* FeRadialButton.h */,
+				BA98AF3A1A7FAF4500C93538 /* FeRadialButton.m */,
+				BA98AF3B1A7FAF4500C93538 /* FeRippleButton.h */,
+				BA98AF3C1A7FAF4500C93538 /* FeRippleButton.m */,
+				BA98AF3D1A7FAF4500C93538 /* UIButton+ResponsiveInteraction.h */,
+				BA98AF3E1A7FAF4500C93538 /* UIButton+ResponsiveInteraction.m */,
+				BA98AF3F1A7FAF4500C93538 /* UIColor+flat.h */,
+				BA98AF401A7FAF4500C93538 /* UIColor+flat.m */,
+				BA98AF411A7FAF4500C93538 /* UILabel+ResponsiveInteraction.h */,
+				BA98AF421A7FAF4500C93538 /* UILabel+ResponsiveInteraction.m */,
 			);
-			name = "Radial Button";
-			sourceTree = "<group>";
-		};
-		BAC493661961B55F00A19A0D /* UILabel */ = {
-			isa = PBXGroup;
-			children = (
-				BA4CEC6B195D228A005FD989 /* UILabel+ResponsiveInteraction.h */,
-				BA4CEC6C195D228B005FD989 /* UILabel+ResponsiveInteraction.m */,
-			);
-			name = UILabel;
-			sourceTree = "<group>";
-		};
-		BAC493671961B56700A19A0D /* UIButton */ = {
-			isa = PBXGroup;
-			children = (
-				BAF74EBB1961496B002DC18A /* UIButton+ResponsiveInteraction.h */,
-				BAF74EBC1961496B002DC18A /* UIButton+ResponsiveInteraction.m */,
-			);
-			name = UIButton;
-			sourceTree = "<group>";
-		};
-		BAC493681961B5B700A19A0D /* Animation Delegate */ = {
-			isa = PBXGroup;
-			children = (
-				BA68A8F8195D69B600144448 /* FeBasicAnimationBlock.h */,
-				BA68A8F9195D69B600144448 /* FeBasicAnimationBlock.m */,
-			);
-			name = "Animation Delegate";
+			path = Class;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -439,19 +412,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA68A8FA195D69B600144448 /* FeBasicAnimationBlock.m in Sources */,
+				BA98AF461A7FAF4500C93538 /* UIButton+ResponsiveInteraction.m in Sources */,
 				BA4CEC42195D2058005FD989 /* main.m in Sources */,
 				BA6837FD1965448A003746F9 /* FeSamplesTableViewController.m in Sources */,
 				BA7C8D701974EB1600ABE2F9 /* FeRippleButtonViewController.m in Sources */,
-				BA4CEC6D195D228B005FD989 /* UILabel+ResponsiveInteraction.m in Sources */,
+				BA98AF471A7FAF4500C93538 /* UIColor+flat.m in Sources */,
 				BA4CEC4C195D2058005FD989 /* FeLabelViewController.m in Sources */,
 				BA4CEC46195D2058005FD989 /* FeAppDelegate.m in Sources */,
+				BA98AF481A7FAF4500C93538 /* UILabel+ResponsiveInteraction.m in Sources */,
 				BA68380F1965488A003746F9 /* FeRadialButtonViewController.m in Sources */,
+				BA98AF431A7FAF4500C93538 /* FeBasicAnimationBlock.m in Sources */,
+				BA98AF441A7FAF4500C93538 /* FeRadialButton.m in Sources */,
 				BA4CEC71195D2399005FD989 /* UIColor+flat.m in Sources */,
-				BAF74EBD1961496B002DC18A /* UIButton+ResponsiveInteraction.m in Sources */,
-				BAC4936E1961C17D00A19A0D /* FeRadialButton.m in Sources */,
-				BA7C8D6C1974DF9F00ABE2F9 /* FeRippleButton.m in Sources */,
 				BA68380B19654778003746F9 /* FeButtonViewController.m in Sources */,
+				BA98AF451A7FAF4500C93538 /* FeRippleButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,10 +7,10 @@
 //
 
 #import "FeLabelViewController.h"
-#import "UILabel+ResponsiveInteraction.h"
 #import "UIColor+flat.h"
 #import "UIButton+ResponsiveInteraction.h"
 #import "FeRadialButton.h"
+#import "UILabel+ResponsiveInteraction.h"
 
 @interface FeLabelViewController () <UIGestureRecognizerDelegate>
 
